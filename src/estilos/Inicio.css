@@ -1,0 +1,100 @@
+/* src/Inicio.css */
+.inicio-container {
+  background-color: white;
+  min-height: 100vh;
+  font-family: sans-serif;
+}
+
+.banner {
+  padding: 60px 20px;
+  text-align: center;
+  background-color: #fff1f2; /* Color rosado suave */
+}
+
+.banner h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin-bottom: 20px;
+}
+
+.banner span {
+  color: #e11d48;
+}
+
+.banner p {
+  font-size: 1.25rem;
+  color: #475569;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.servicios-container {
+  padding: 60px 20px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.titulo-seccion {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 40px;
+}
+
+.grid-servicios {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.tarjeta-servicio {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  transition: transform 0.3s;
+}
+
+.tarjeta-servicio:hover {
+  transform: translateY(-10px);
+}
+
+.tarjeta-servicio .icono {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.tarjeta-servicio h3 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+/* Estilo para que la tarjeta de tienda resalte */
+.tarjeta-especial {
+  background: #2c3e50 !important; /* Color oscuro del header/footer */
+  color: white !important;
+  text-decoration: none;
+}
+
+.tarjeta-especial h3, 
+.tarjeta-especial p {
+  color: white !important;
+}
+
+.ver-mas {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+  color: #ff5733; /* Color de acento de tu marca */
+}
+
+/* Ajuste para el Link en caso de que lo necesites */
+.tarjeta-servicio {
+  text-decoration: none; /* Quitamos el subrayado del link */
+  display: flex;
+  flex-direction: column;
+}
+

@@ -1,0 +1,45 @@
+/* src/estilos/Horarios.css */
+.seccion-horarios {
+  padding: 60px 20px;
+  background-color: #f8fafc; /* Un gris muy clarito para diferenciarlo */
+  text-align: center;
+}
+
+.horarios-titulo {
+  font-size: 2rem;
+  color: #1e293b;
+  margin-bottom: 30px;
+}
+
+.horarios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.horario-card {
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.horario-card h3 {
+  font-size: 1.1rem;
+  color: #64748b;
+  margin-bottom: 10px;
+}
+
+.horario-card .hora {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #e11d48; /* Color rosado */
+}
+
+.horario-card .estado {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #94a3b8;
+}

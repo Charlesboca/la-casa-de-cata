@@ -1,0 +1,123 @@
+.header-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: #1f2937;
+  padding: 0 20px; /* Padding reducido */
+  height: 80px; /* Altura fija para centrar verticalmente */
+  display: flex;
+  align-items: center;
+}
+
+
+
+.menu-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+/* El menú ahora se despliega hacia la izquierda desde la derecha */
+.nav-vertical{
+    display:none;
+    flex-direction:column;
+    position:absolute;
+    top:80px;
+    left:20px;
+    width:220px;
+    background:#1f2937;
+    border-radius:8px;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+
+.nav-vertical.open {
+  display: flex;
+}
+
+.nav-vertical a {
+  color: white;
+  padding: 15px 20px;
+  text-decoration: none;
+  border-bottom: 1px solid #374151;
+  text-align: right; /* Alineamos el texto a la derecha */
+}
+
+.left-side{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.left-side{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+/* 1. Aseguramos que el contenedor del logo sea flexible */
+.logo-container {
+    position: absolute; /* Saca el logo del flujo normal */
+    left: 50%;          /* Lo mueve al centro */
+    transform: translateX(-50%); /* Ajusta el centro exacto */
+    width: 120px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 2. Aseguramos que la imagen ocupe el espacio correctamente */
+.logo-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* 3. Ajustamos el contenedor principal para que el logo se sienta centrado respecto al botón */
+.header-container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    position: relative; /* IMPORTANTE: Esto permite centrar el logo de forma absoluta */
+    padding: 0 20px;
+}
+
+/* 4. Ajustamos el botón para que no empuje el logo */
+.menu-btn {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    flex-shrink: 0; /* Evita que el botón se achique */
+}
+
+
+/* ... (El estilo del .header-wrapper sigue igual con Grid) ... */
+
+.nav-vertical {
+  display: none;
+  flex-direction: column;
+  position: absolute; /* Esto permite que el menú "flote" sobre el contenido */
+  top: 80px;
+  left: 20px;
+  width: 220px;
+  background: #1f2937;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.25);
+  z-index: 100; /* Asegura que el menú esté siempre encima de todo */
+}
+
+.nav-vertical.open {
+  display: flex;
+}

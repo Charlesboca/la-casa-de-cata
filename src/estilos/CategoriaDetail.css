@@ -1,0 +1,67 @@
+.grid-productos {
+  display: grid;
+  /* Cambié 250px a 200px para que las tarjetas sean más pequeñas */
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  max-width: 1000px; /* Opcional: limita el ancho total para que no se expandan infinitamente */
+  margin: 0 auto;    /* Centra todo el grid en la pantalla */
+}
+
+.tarjeta-producto-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.tarjeta-producto {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,.12);
+    transition: .25s;
+}
+
+.tarjeta-producto:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 15px 35px rgba(0,0,0,.18);
+}
+
+
+
+.tarjeta-producto p {
+  color: #666;
+}
+
+.producto-img {
+  width: 100%;       /* Cambiado de 50% a 100% */
+  height: 150px;     /* Ajustá este valor según qué tan "baja" quieras la tarjeta */
+  object-fit: cover;
+  display: block;
+}
+
+.tarjeta-producto-info{
+    padding:18px;
+}
+
+.tarjeta-producto h3{
+    margin:0 0 12px;
+    font-size:1.2rem;
+}
+
+.precio{
+    color:#d62828;
+    font-size:1.3rem;
+    font-weight:bold;
+}
+
+.titulo-categoria {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin: 40px auto 30px auto; /* 'auto' a los lados centra el bloque */
+  text-transform: capitalize;
+  font-weight: 700;
+  border-bottom: 3px solid #ff5733;
+  padding-bottom: 10px;
+  display: block;             /* Cambiamos de inline-block a block */
+  width: fit-content;         /* Hace que el bloque ocupe solo lo que mide el texto */
+}
