@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom'; // 1. Importá Link
 import logoBazar from '../assets/Logo-casa-cata.jpeg';
-import Navbar from './Navbar'; 
+import Navbar from './NavBar'; 
 import '../estilos/Header.css';
 
 export default function Header() {
