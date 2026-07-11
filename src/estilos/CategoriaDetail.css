@@ -65,3 +65,33 @@
   display: block;             /* Cambiamos de inline-block a block */
   width: fit-content;         /* Hace que el bloque ocupe solo lo que mide el texto */
 }
+
+.contenedor-volver {
+  text-align: left;
+  padding: 20px 20px 0; /* Espaciado arriba y a los lados */
+}
+
+.btn-volver {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  
+  /* Colores sólidos */
+  background-color: #2c3e50; /* Un tono oscuro que combina con tu header/footer */
+  color: white;              /* Letra blanca para contrastar */
+  
+  /* Formato del botón */
+  padding: 8px 16px;
+  border-radius: 8px;        /* Bordes redondeados */
+  font-weight: 500;
+  font-size: 0.9rem;
+  
+  /* Transición suave al pasar el mouse */
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.btn-volver:hover {
+  background-color: #3e5871; /* Un color un poquito más claro al pasar el mouse */
+  transform: translateY(-2px); /* Un pequeño efecto de elevación */
+  cursor: pointer;
+}

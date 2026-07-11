@@ -40,10 +40,17 @@ export default function CategoriaDetail() {
   return (
     <section>
 
-<h2 className="titulo-categoria">
-  Productos de la categoría: {catName}
-</h2>
-      
+      {/* 1. Agregamos el botón de volver */}
+      <div className="contenedor-volver">
+        <Link to="/productos" className="btn-volver">
+          ← Volver a categorías
+        </Link>
+      </div>
+
+      <h2 className="titulo-categoria">
+        Productos de la categoría: {catName}
+      </h2>
+
       {loading ? (
         <div className="grid-productos">
             <SkeletonProducto />
