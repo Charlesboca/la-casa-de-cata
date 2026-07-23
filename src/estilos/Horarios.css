@@ -1,45 +1,47 @@
 /* src/estilos/Horarios.css */
 .seccion-horarios {
-  padding: 60px 20px;
-  background-color: #f8fafc; /* Un gris muy clarito para diferenciarlo */
+  padding: 25px 20px; /* Reducido de 60px a 25px arriba/abajo */
+  background-color: #f8fafc;
   text-align: center;
 }
 
 .horarios-titulo {
-  font-size: 2rem;
+  font-size: 1.5rem; /* Achicado de 2rem a 1.5rem */
   color: #1e293b;
-  margin-bottom: 30px;
+  margin-bottom: 15px; /* Reducido de 30px a 15px */
 }
 
 .horarios-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  max-width: 800px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px; /* Menor espacio entre tarjetas */
+  max-width: 700px; /* Un poco más compacto a lo ancho */
   margin: 0 auto;
 }
 
 .horario-card {
-  padding: 20px;
+  padding: 12px 15px; /* Reducido de 20px para hacerlo más compacto */
   background: white;
-  border-radius: 12px;
+  border-radius: 10px;
   border: 1px solid #e2e8f0;
 }
 
 .horario-card h3 {
-  font-size: 1.1rem;
+  font-size: 0.95rem; /* Título más discreto */
   color: #64748b;
-  margin-bottom: 10px;
+  margin-bottom: 6px; /* Reducido */
 }
 
 .horario-card .hora {
-  font-size: 1.3rem;
+  font-size: 1.1rem; /* Números de hora más chicos y estilizados */
   font-weight: bold;
-  color: #e11d48; /* Color rosado */
+  color: #e11d48;
+  margin-bottom: 3px; /* Espacio ajustado entre turno mañana y tarde */
 }
 
 .horario-card .estado {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   font-weight: bold;
   color: #94a3b8;
+  margin: 0;
 }
