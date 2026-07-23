@@ -48,7 +48,7 @@ export default function CategoriaDetail() {
       </div>
 
       <h2 className="titulo-categoria">
-        Productos de la categoría: {catName}
+         {catName}
       </h2>
 
       {loading ? (
