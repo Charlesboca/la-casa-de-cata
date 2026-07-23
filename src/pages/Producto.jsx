@@ -37,16 +37,23 @@ export default function Producto() {
           <div 
             key={cat.id} 
             className="tarjeta"
-            // 2. Agregamos el evento click para navegar
             onClick={() => navigate(`/productos/${cat.nombre.toLowerCase()}`)}
             style={{ cursor: 'pointer' }} 
           >
             <div className="icono">{cat.nombre ? cat.nombre[0] : 'C'}</div> 
             <h3>{cat.nombre || 'Sin nombre'}</h3>
             <p>{cat.descripcion || 'Sin descripción'}</p>
+            
+            {/* 🛠️ Aquí cambiamos <image> por <img> */}
+            <img 
+              src={cat.imagen || 'https://via.placeholder.com/150'} 
+              alt={cat.nombre || 'Categoría'} 
+              className="imagen-categoria" 
+            />
           </div>
         ))}
       </div>
+
     </section>
   );
 }
