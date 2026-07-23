@@ -12,7 +12,14 @@ export default function CategoriaDetail() {
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  
+
   useEffect(() => {
+
+    // ⬆️ Cada vez que entres o cambies de categoría, sube la página arriba de todo
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+
    const fetchProductos = async () => {
   setLoading(true);
   try {
