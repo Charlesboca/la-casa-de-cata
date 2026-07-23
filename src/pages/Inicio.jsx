@@ -60,7 +60,7 @@ export default function Inicio() {
                 <div className="horario-card">
                     <h3>Sábados</h3>
                     <p className="hora">09:00 - 12:00</p>
-                     <p className="hora">17:00 - 20:00</p>
+                     <p className="hora">17:00 - 18:30</p>
 
                 </div>
                 <div className="horario-card">
