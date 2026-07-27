@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom'; // 1. Agregamos Link
 import { db } from '../firebase/firebaseConfig.js'; 
 import { collection, query, where, getDocs } from 'firebase/firestore';
-import SkeletonProducto from '../components/SkeletonProducto';
-import '../estilos/CategoriaDetail.css';
+import SkeletonProducto from '../components/SkeletonProducto.jsx';
+import '../estilos/ProductosPorCategoria.css';
 
 
 
-export default function CategoriaDetail() {
+export default function ProductosPorCategoria() {
   const { catName } = useParams();
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);

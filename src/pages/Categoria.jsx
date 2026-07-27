@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Para navegar
 import { db } from '../firebase/firebaseConfig.js'; 
 import { collection, getDocs, query } from 'firebase/firestore';
-import '../estilos/Productos.css';
+import '../estilos/Categoria.css';
 
 
-export default function Producto() {
+export default function Categoria() {
   const [categorias, setCategorias] = useState([]);
   const navigate = useNavigate(); // 1. Inicializamos el hook de navegación
 
