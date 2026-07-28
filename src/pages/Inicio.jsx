@@ -27,12 +27,6 @@ export default function Inicio() {
             <p>Tramitamos tus antecedentes, constancias de CUIL, ANSES y más trámites online.</p>
           </div>
 
-          <div className="tarjeta-servicio">
-            <span className="icono">🌐</span>
-            <h3>Trámites Online</h3>
-            <p>Asistencia personalizada para trámites digitales complejos y consultas web.</p>
-          </div>
-        
         {/* Tarjeta de Acceso a Productos */}
         <Link to="/productos" className="tarjeta-servicio tarjeta-especial">
           <span className="icono">🛍️</span>
