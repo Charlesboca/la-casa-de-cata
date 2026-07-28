@@ -23,4 +23,11 @@ export const categoriasFijas = [
     descripcion: 'Artículos de mercería',
     imagen: '/imagenes/categorias/merceria.webp'
   },
+  {
+    id: '5',
+    nombre: 'Marroquineria',
+    descripcion: 'Artículos de marroquinería',
+    imagen: '/imagenes/categorias/marroquineria.webp'
+  }
+
 ];
