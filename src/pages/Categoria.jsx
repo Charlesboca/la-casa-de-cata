@@ -54,7 +54,7 @@ export default function Categoria() {
               <img 
                 src={
                   cat.imagen && cat.imagen.includes('cloudinary.com')
-                    ? cat.imagen.replace('/upload/', '/upload/w_400,c_scale,f_auto,q_auto/')
+                    ? cat.imagen.replace('/upload/', '/upload/w_250,c_fill,f_auto,q_auto/')
                     : (cat.imagen || 'https://via.placeholder.com/150')
                 } 
                 alt={cat.nombre || 'Categoría'} 
