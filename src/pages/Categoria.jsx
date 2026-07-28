@@ -7,6 +7,10 @@ export default function Categoria() {
   // Ya no necesitamos useEffect ni Firestore, pasamos los datos fijos directo
   const [categorias] = useState(categoriasFijas);
 
+  const handleScrollTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' }); // O podés sacar el behavior si querés que suba de golpe sin animación
+  };
+
   return (
     <section className="categorias-seccion">
       <h2 className="categorias-titulo">Explora nuestras categorías</h2>
