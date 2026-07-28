@@ -5,29 +5,36 @@ export const categoriasFijas = [
     descripcion: 'Artículos para el hogar y cocina',
     imagen: '/imagenes/categorias/bazar.webp'
   },
+  
+   { id: '2',
+    nombre: 'Electronica',
+    descripcion: 'Artículos de electrónica',
+    imagen: '/imagenes/categorias/electronica.webp'
+  },
   {
-    id: '2',
+    id: '3',
     nombre: 'Libreria',
     descripcion: 'Cuadernos, lápices y más',
     imagen: '/imagenes/categorias/libreria.webp'
   },
    {
-    id: '3',
+    id: '4',
     nombre: 'Personal',
-    descripcion: 'Artículos de cuidado personal',
+    descripcion: 'Artículos personales y de cuidado',
     imagen: '/imagenes/categorias/personal.webp'
   },
    {
-    id: '4',
+    id: '5',
     nombre: 'Merceria',
     descripcion: 'Artículos de mercería',
     imagen: '/imagenes/categorias/merceria.webp'
   },
   {
-    id: '5',
+    id: '6',
     nombre: 'Marroquineria',
     descripcion: 'Artículos de marroquinería',
     imagen: '/imagenes/categorias/marroquineria.webp'
   }
-
+  
+  
 ];
