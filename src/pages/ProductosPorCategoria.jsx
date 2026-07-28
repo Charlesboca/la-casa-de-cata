@@ -11,7 +11,6 @@ export default function ProductosPorCategoria() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
@@ -27,6 +26,9 @@ export default function ProductosPorCategoria() {
           id: doc.id,
           ...doc.data()
         }));
+        
+        // 🔤 Ordenamos alfabéticamente por nombre antes de meterlo al estado
+        listaProductos.sort((a, b) => a.nombre.localeCompare(b.nombre));
         
         setProductos(listaProductos);
       } catch (error) {
@@ -61,7 +63,6 @@ export default function ProductosPorCategoria() {
         <div className="grid-productos">
           {productos.length > 0 ? (
             productos.map(prod => (
-              /* 🚀 AQUÍ PASAMOS EL PRODUCTO ENTERO EN EL STATE */
               <Link 
                 to={`/producto/${prod.id}`} 
                 state={{ producto: prod }} 
