@@ -37,6 +37,7 @@
   height: 150px;     /* Ajustá este valor según qué tan "baja" quieras la tarjeta */
   object-fit: cover;
   display: block;
+  background-color: #2a2a2a; /* Fondo gris oscuro mientras carga la foto */
 }
 
 .tarjeta-producto-info{
