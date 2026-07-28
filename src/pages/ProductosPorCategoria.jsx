@@ -79,7 +79,8 @@ export default function ProductosPorCategoria() {
               }
               alt={prod.nombre}
               className="producto-img"
-            />
+              loading="lazy" //👈 Clave para que el celu no cargue todo de golpe 
+              />            
   {/* 👈 Extra: Carga perezosa nativa del navegador */}
 
                   <h3>{prod.nombre}</h3>
