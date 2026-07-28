@@ -1,0 +1,194 @@
+/* src/estilos/FormularioProducto.css */
+
+.formulario-contenedor {
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 25px;
+  background-color: #1e1e1e;
+  color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.formulario-titulo {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.mensaje-alerta {
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.mensaje-alerta.exito {
+  background-color: #2e7d32;
+  color: #fff;
+}
+
+.mensaje-alerta.error {
+  background-color: #c62828;
+  color: #fff;
+}
+
+.formulario-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 15px;
+}
+
+.formulario-grupo label {
+  font-size: 0.95rem;
+  color: #ccc;
+}
+
+.formulario-grupo input,
+.formulario-grupo textarea,
+.formulario-grupo select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #444;
+  background-color: #2a2a2a;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.formulario-grupo input:focus,
+.formulario-grupo textarea:focus,
+.formulario-grupo select:focus {
+  outline: none;
+  border-color: #e53935;
+}
+
+.formulario-grupo textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.btn-guardar {
+  width: 100%;
+  padding: 12px;
+  background-color: #e53935;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 10px;
+}
+
+.btn-guardar:hover {
+  background-color: #c62828;
+}
+
+.btn-guardar:disabled {
+  background-color: #757575;
+  cursor: not-allowed;
+}
+
+/* src/estilos/FormularioProducto.css */
+
+.titulo-principal-formulario {
+  color: pink;
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 25px;
+  text-decoration: underline;
+  padding-bottom: 5px;
+  margin-top: 40px;      /* 👈 Aumentá este valor para darle más aire arriba */
+  margin-bottom: 25px;   /* Este maneja el aire hacia abajo */
+}
+
+/* Estilos para el fondo oscuro del modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Caja del modal */
+.modal-contenido {
+  background-color: #222;
+  color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  border: 1px solid #444;
+}
+
+.modal-contenido h3 {
+  color: pink;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+}
+
+.modal-contenido p {
+  margin-bottom: 20px;
+  color: #ccc;
+}
+
+/* Y solo la etiqueta strong (el nombre del producto) se pone verde y resalta */
+.modal-contenido p strong {
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+.btn-cerrar-modal {
+  background-color: #e53935;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-cerrar-modal:hover {
+  background-color: #c62828;
+}
+
+/* --- MEDIA QUERY PARA CELULARES --- */
+@media (max-width: 600px) {
+  .formulario-contenedor {
+    width: 92%;
+    margin: 15px auto;
+    padding: 15px;
+  }
+
+  .titulo-principal-formulario {
+    font-size: 1.5rem;
+    margin-top: 25px;
+    margin-bottom: 15px;
+  }
+
+  .formulario-grupo input,
+  .formulario-grupo textarea,
+  .formulario-grupo select {
+    font-size: 16px; /* Evita que los dispositivos iOS hagan zoom automático al enfocar */
+  }
+
+  .modal-contenido {
+    padding: 20px;
+    width: 95%;
+  }
+}
