@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom'; // 1. Importá Link
+import { Link } from 'react-router-dom';
 import logoBazar from '../assets/Logo-casa-cata.jpeg';
 import Navbar from './NavBar'; 
 import '../estilos/Header.css';
@@ -14,9 +14,11 @@ export default function Header() {
         ☰
       </button>
 
-      {/* 2. Envolvé la imagen con el componente Link */}
       <div className="logo-container">
-        <Link to="/">
+        <Link 
+          to="/" 
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        >
           <img src={logoBazar} alt="Logo La Casa de Cata" />
         </Link>
       </div>
