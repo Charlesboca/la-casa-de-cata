@@ -53,3 +53,37 @@
   border-radius: 8px;     /* Redondea un poquito las puntas para que combine con la tarjeta */
   margin-top: 12px;       /* Las separa del texto de descripción */
 }
+
+.btn-volver-inicio {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 40px auto 0 auto; /* El "auto" a los lados centra el bloque si tiene un ancho definido, o podés usar text-align en el contenedor */
+  background-color: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 50px; /* Bordes bien redondeados estilo píldora */
+  padding: 12px 24px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.link-volver-inicio {
+  text-decoration: none;
+  color: #1e293b;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+
+/* Efecto hover copado cuando pasas el mouse */
+.btn-volver-inicio:hover {
+  background-color: #1e293b;
+  border-color: #1e293b;
+  transform: translateY(-2px); /* Se eleva un poquito */
+  box-shadow: 0 6px 12px -2px rgba(30, 41, 59, 0.2);
+}
+
+.btn-volver-inicio:hover .link-volver-inicio {
+  color: #ffffff;
+}

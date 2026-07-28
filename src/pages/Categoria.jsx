@@ -15,6 +15,8 @@ export default function Categoria() {
 
 
   return (
+
+    <>  
     <section className="categorias-seccion">
       <h2 className="categorias-titulo">Explora nuestras categorías</h2>
       
@@ -40,5 +42,18 @@ export default function Categoria() {
         ))}
       </div>
     </section>
+
+    
+ <button className="btn-volver-inicio">
+        <Link to="/" 
+        className="link-volver-inicio"
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        >
+          ← Volver al inicio
+        </Link>
+      </button>   
+
+
+    </>
   );
 }
