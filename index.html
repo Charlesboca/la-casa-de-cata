@@ -2,15 +2,47 @@
 <html lang="es">
   <head>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-15ZZTWY19W"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+  <!-- Google tag (gtag.js) - Carga diferida optimizada -->
+  <script>
+    (function() {
+      var gtmLoaded = false;
+      
+      function loadGTM() {
+        if (gtmLoaded) return;
+        gtmLoaded = true;
+        
+        // 1. Cargamos el script principal de Google
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-15ZZTWY19W';
+        document.head.appendChild(script);
 
-      gtag('config', 'G-15ZZTWY19W');
-    </script>
+        // 2. Inicializamos el dataLayer y la configuración
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag = gtag; // Lo hacemos accesible globalmente por si lo usás en componentes
+        gtag('js', new Date());
+        gtag('config', 'G-15ZZTWY19W');
+
+        // 3. Limpiamos los eventos de interacción
+        window.removeEventListener('scroll', triggerGTM);
+        window.removeEventListener('mousemove', triggerGTM);
+        window.removeEventListener('touchstart', triggerGTM);
+      }
+
+      function triggerGTM() {
+        loadGTM();
+      }
+
+      // Se dispara apenas el usuario hace scroll, mueve el mouse o toca la pantalla
+      window.addEventListener('scroll', triggerGTM, {once: true, passive: true});
+      window.addEventListener('mousemove', triggerGTM, {once: true, passive: true});
+      window.addEventListener('touchstart', triggerGTM, {once: true, passive: true});
+
+      // O por seguridad, carga automáticamente a los 4 segundos si el usuario no interactúa
+      setTimeout(loadGTM, 4000);
+    })();
+  </script>
 
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/Logo-casa-cata-fix.webp" />
