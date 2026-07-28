@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useLocation, Link } from 'react-router-dom';
 import { db } from '../firebase/firebaseConfig.js';
 import { doc, getDoc } from 'firebase/firestore';
 import ModalImagen from '../components/ModalImagen'
@@ -7,22 +7,34 @@ import '../estilos/ItemDetail.css';
 
 export default function ItemDetail() {
   const { id } = useParams();
-  const [producto, setProducto] = useState(null);
+  const location = useLocation();
+  
+  // ⚡ Intentamos leer el producto si viene viajando desde el listado
+  const [producto, setProducto] = useState(location.state?.producto || null);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' }); // Subir al inicio al entrar al detalle
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 
+    // Si ya lo tenemos por el state, no necesitamos consultar Firestore
+    if (producto) return;
+
+    // Si alguien entró directo por link/URL, vamos a buscarlo a Firebase
     const getProducto = async () => {
-      const docRef = doc(db, "productos", id);
-      const docSnap = await getDoc(docRef);
+      try {
+        const docRef = doc(db, "productos", id);
+        const docSnap = await getDoc(docRef);
 
-      if (docSnap.exists()) {
-        setProducto({ id: docSnap.id, ...docSnap.data() });
+        if (docSnap.exists()) {
+          setProducto({ id: docSnap.id, ...docSnap.data() });
+        }
+      } catch (error) {
+        console.error("Error al buscar el producto:", error);
       }
     };
+    
     getProducto();
-  }, [id]);
+  }, [id, producto]);
 
   if (!producto) return <p style={{ textAlign: 'center', marginTop: '2rem' }}>Cargando producto...</p>;
 
@@ -33,14 +45,12 @@ export default function ItemDetail() {
   return (
     <div className="detalle-container">
       
-      {/* 🔙 BOTÓN DE VOLVER */}
       <div className="volver-container">
         <Link to={rutaVolver} className="btn-volver-categoria">
           ← Volver a {producto.categoria || 'productos'}
         </Link>
       </div>
       
-      {/* 🖼️ Imagen optimizada para la vista de detalle (w_600 para que no pierda nitidez) */}
       <img 
         src={
           producto.imagen && producto.imagen.includes('cloudinary.com')
@@ -53,7 +63,6 @@ export default function ItemDetail() {
         style={{ cursor: 'pointer' }}
       />
             
-      {/* 🔍 El modal recibe la imagen ORIGINAL para que se vea perfecta al hacer zoom */}
       {showModal && (
         <ModalImagen 
           src={producto.imagen} 
