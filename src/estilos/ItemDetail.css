@@ -76,3 +76,35 @@
 .btn-volver-categoria:hover {
   background-color: #374151;
 }
+
+.btn-whatsapp {
+  background-color: #25D366; /* Color verde WhatsApp */
+  color: #ffffff; /* Texto blanco */
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  /* Esto alinea el icono y el texto perfectamente */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; /* Espacio entre el icono y el texto */
+  margin-top: 20px;
+  width: 100%;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-whatsapp:hover {
+  background-color: #20ba5a; /* Un verde un poco más oscuro al pasar el mouse */
+  transform: translateY(-2px); /* Pequeño efecto de elevación */
+}
+
+/* 📱 Media query para celulares (pantallas menores a 768px) */
+@media (max-width: 768px) {
+  .btn-whatsapp {
+    padding: 14px 16px; /* Un poquito más alto para que sea más fácil de tocar con el dedo */
+    font-size: 0.95rem; /* Ajuste sutil de escala para pantallas chicas */
+  }
+}

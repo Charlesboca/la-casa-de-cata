@@ -2,29 +2,25 @@ import { useEffect, useState } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
 import { db } from '../firebase/firebaseConfig.js';
 import { doc, getDoc } from 'firebase/firestore';
-import ModalImagen from '../components/ModalImagen'
+import ModalImagen from '../components/ModalImagen';
+// 1. Importamos el icono desde lucide-react
+import { Smartphone } from 'lucide-react';
 import '../estilos/ItemDetail.css';
 
 export default function ItemDetail() {
   const { id } = useParams();
   const location = useLocation();
   
-  // ⚡ Intentamos leer el producto si viene viajando desde el listado
   const [producto, setProducto] = useState(location.state?.producto || null);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    // Si ya lo tenemos por el state, no necesitamos consultar Firestore
     if (producto) return;
-
-    // Si alguien entró directo por link/URL, vamos a buscarlo a Firebase
     const getProducto = async () => {
       try {
         const docRef = doc(db, "productos", id);
         const docSnap = await getDoc(docRef);
-
         if (docSnap.exists()) {
           setProducto({ id: docSnap.id, ...docSnap.data() });
         }
@@ -32,7 +28,6 @@ export default function ItemDetail() {
         console.error("Error al buscar el producto:", error);
       }
     };
-    
     getProducto();
   }, [id, producto]);
 
@@ -42,15 +37,19 @@ export default function ItemDetail() {
     ? `/productos/${producto.categoria.toLowerCase()}` 
     : '/productos';
 
+  const handleCompartirWhatsApp = () => {
+    const texto = `¡Hola! Me interesa este producto de La Casa de Cata: *${producto.nombre}* a $${Number(producto.precio || 0).toLocaleString('es-AR')}. Lo vi acá: ${window.location.href}`;
+    const urlWhatsApp = `https://api.whatsapp.com/send?text=${encodeURIComponent(texto)}`;
+    window.open(urlWhatsApp, '_blank');
+  };
+
   return (
     <div className="detalle-container">
-      
       <div className="volver-container">
         <Link to={rutaVolver} className="btn-volver-categoria">
           ← Volver a {producto.categoria || 'productos'}
         </Link>
       </div>
-      
       <img 
         src={
           producto.imagen && producto.imagen.includes('cloudinary.com')
@@ -62,7 +61,6 @@ export default function ItemDetail() {
         onClick={() => setShowModal(true)}
         style={{ cursor: 'pointer' }}
       />
-            
       {showModal && (
         <ModalImagen 
           src={producto.imagen} 
@@ -70,16 +68,19 @@ export default function ItemDetail() {
           onClose={() => setShowModal(false)} 
         />
       )}
-
       <h2 className="titulo-detalle">{producto.nombre}</h2>
-
       <p className="descripcion">
         {producto.descripcion}
       </p>
-
       <p className="precio">
         ${Number(producto.precio || 0).toLocaleString('es-AR')}
       </p>
+
+      {/* 2. Reemplazamos el emoji por el componente del icono */}
+      <button onClick={handleCompartirWhatsApp} className="btn-whatsapp">
+      <Smartphone size={22} strokeWidth={2.5} /> {/* Un poco más grande y grueso para que resalte */}
+        Compartir por WhatsApp
+      </button>
 
     </div>
   );
