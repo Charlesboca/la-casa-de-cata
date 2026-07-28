@@ -19,7 +19,10 @@ export default function Header() {
           to="/" 
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         >
-          <img src={logoBazar} alt="Logo La Casa de Cata" />
+          <img src={logoBazar} 
+          alt="Logo La Casa de Cata" 
+          fetchPriority="high"
+          />
         </Link>
       </div>
 
