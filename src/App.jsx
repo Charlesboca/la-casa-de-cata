@@ -1,28 +1,37 @@
-// src/App.jsx
+import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout.jsx';
-import Inicio from './pages/Inicio.jsx';
 
-import Categoria from './pages/Categoria.jsx';
-import ProductosPorCategoria from './pages/ProductosPorCategoria.jsx';
-import ItemDetail from './pages/ItemDetail.jsx';
-import FormularioProducto from './components/FormularioProducto.jsx'; // 👈 1. Importamos el formulario
+// 1. Convertimos tus importaciones normales en carga perezosa (lazy)
+const Inicio = lazy(() => import('./pages/Inicio.jsx'));
+const Categoria = lazy(() => import('./pages/Categoria.jsx'));
+const ProductosPorCategoria = lazy(() => import('./pages/ProductosPorCategoria.jsx'));
+const ItemDetail = lazy(() => import('./pages/ItemDetail.jsx'));
+const FormularioProducto = lazy(() => import('./components/FormularioProducto.jsx'));
+
+// Un spinner o texto simple mientras carga el bloque de la página
+const LoadingFallback = () => (
+  <div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
+    Cargando...
+  </div>
+);
 
 function App() {
   return (
     <BrowserRouter>
       <Layout>
-        <Routes>
-          <Route path="/" element={<Inicio />} />
-          <Route path="/productos" element={<Categoria />} />
-          <Route path="/productos/:catName" element={<ProductosPorCategoria />} />
-          <Route path="/producto/:id" element={<ItemDetail />} />
-          <Route path="/panel-producto" element={<FormularioProducto />} /> {/* 👈 2. Ruta para agregar producto */}
-        </Routes>
+        <Suspense fallback={<LoadingFallback />}>
+          <Routes>
+            <Route path="/" element={<Inicio />} />
+            <Route path="/productos" element={<Categoria />} />
+            <Route path="/productos/:catName" element={<ProductosPorCategoria />} />
+            <Route path="/producto/:id" element={<ItemDetail />} />
+            <Route path="/panel-producto" element={<FormularioProducto />} />
+          </Routes>
+        </Suspense>
       </Layout>
     </BrowserRouter>
   )
 }
-
 
 export default App;
