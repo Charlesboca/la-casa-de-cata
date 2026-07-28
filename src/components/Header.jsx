@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import logoBazar from '../assets/Logo-casa-cata.jpeg';
+import logoBazar from '../assets/Logo-casa-cata.webp';
 import Navbar from './NavBar'; 
 import '../estilos/Header.css';
 

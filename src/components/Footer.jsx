@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import '../estilos/Footer.css';
-import logoFooter from '../assets/Logo-casa-cata.jpeg';
+import logoFooter from '../assets/Logo-casa-cata.webp';
 
 export default function Footer() {
   // Función para volver al inicio con un scroll suave
