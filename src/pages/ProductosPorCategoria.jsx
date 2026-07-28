@@ -71,11 +71,18 @@ export default function ProductosPorCategoria() {
               // 2. Envolvemos la tarjeta en un Link hacia el detalle
               <Link to={`/producto/${prod.id}`} key={prod.id} className="tarjeta-producto-link">
                 <div className="tarjeta-producto">
-                   <img
-                    src={prod.imagen}
-                    alt={prod.nombre}
-                    className="producto-img"
+<img
+  src={
+    prod.imagen && prod.imagen.includes('cloudinary.com')
+      ? prod.imagen.replace('/upload/', '/upload/w_400,c_scale,f_auto,q_auto/')
+      : prod.imagen
+  }
+  alt={prod.nombre}
+  className="producto-img"
+  loading="lazy" 
   />
+  {/* 👈 Extra: Carga perezosa nativa del navegador */}
+
                   <h3>{prod.nombre}</h3>
                   <p>Precio: ${prod.precio}</p>
                 </div>
