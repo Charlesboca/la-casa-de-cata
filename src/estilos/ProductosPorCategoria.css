@@ -68,9 +68,14 @@
 }
 
 .contenedor-volver {
-  text-align: left;
-  padding: 20px 20px 0; /* Espaciado arriba y a los lados */
+  width: 100%;
+  max-width: 1000px; /* Alineado al ancho máximo de tu grid de productos */
+  margin: 0 auto;    /* Centra el contenedor en la pantalla */
+  padding: 20px 20px 0;
+  display: flex;
+  justify-content: center; /* 👈 Esto centra el botón perfectamente */
 }
+
 
 .btn-volver {
   display: inline-flex;

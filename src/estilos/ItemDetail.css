@@ -1,61 +1,20 @@
-/* src/estilos/Detalle.css */
-
+/* Contenedor general de la página de detalle */
 .detalle-container {
-  max-width: 700px;
-  margin: 40px auto;
-  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
+  padding: 20px 15px 40px 15px;
+  background-color: #f8fafc;
+  min-height: 80vh;
 }
 
-.imagen-detalle {
-  width: 100%;
-  max-width: 250px;
-  height: auto;
-  object-fit: cover;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,.15);
-  display: block;
-  margin: 0 auto;
-  cursor: pointer;
-  transition: transform .25s ease;
-}
-
-.imagen-detalle:hover {
-  transform: scale(1.02);
-}
-
-.detalle-container h1,
-.detalle-container h2 {
-  margin: 25px 0 15px;
-  font-size: 2rem;
-  color: #222;
-}
-
-.descripcion {
-  max-width: 600px;
-  width: 90%;
-  color: #666;
-  font-size: 1.1rem;
-  line-height: 1.8;
-  text-align: center;
-  margin: 20px auto;
-}
-
-.precio {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #d32f2f;
-  margin: 20px 0;
-}
-
-/* Contenedor del botón de volver */
+/* Contenedor del botón de volver (¡Aquí faltaba el flex y el justify-content!) */
 .volver-container {
-  margin-bottom: 20px;
   width: 100%;
   max-width: 600px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center; /* 👈 Esto centra el botón exactamente en el medio */
 }
 
 /* El botón / enlace de retorno */
@@ -72,39 +31,113 @@
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
-/* Efecto hover opcional al pasar el mouse */
 .btn-volver-categoria:hover {
   background-color: #374151;
+  transform: translateY(-1px);
 }
 
+/* 🎨 Estilo de la Card principal */
+.detalle-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 600px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Imagen dentro de la card */
+.imagen-detalle {
+  width: 100%;
+  max-height: 350px;
+  object-fit: contain;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  background-color: #f1f5f9;
+  transition: transform 0.3s ease;
+}
+
+.imagen-detalle:hover {
+  transform: scale(1.02);
+}
+
+/* Título */
+.titulo-detalle {
+  font-size: 1.5rem;
+  color: #1e293b;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+/* Descripción */
+.descripcion-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.descripcion-linea {
+  color: #475569;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Precio */
+.precio {
+  font-size: 1.8rem;
+  color: #dc2626;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+/* Botón de WhatsApp */
 .btn-whatsapp {
-  background-color: #25D366; /* Color verde WhatsApp */
-  color: #ffffff; /* Texto blanco */
+  background-color: #25D366;
+  color: #ffffff;
   border: none;
   padding: 12px 20px;
-  border-radius: 8px;
+  border-radius: 10px;
   font-weight: bold;
   font-size: 1rem;
   cursor: pointer;
-  /* Esto alinea el icono y el texto perfectamente */
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px; /* Espacio entre el icono y el texto */
-  margin-top: 20px;
+  gap: 10px;
   width: 100%;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .btn-whatsapp:hover {
-  background-color: #20ba5a; /* Un verde un poco más oscuro al pasar el mouse */
-  transform: translateY(-2px); /* Pequeño efecto de elevación */
+  background-color: #20ba5a;
+  transform: translateY(-2px);
 }
 
-/* 📱 Media query para celulares (pantallas menores a 768px) */
+/* 📱 Media query para celulares */
 @media (max-width: 768px) {
+  .detalle-card {
+    padding: 20px 15px;
+  }
+  
+  .titulo-detalle {
+    font-size: 1.3rem;
+  }
+
+  .precio {
+    font-size: 1.5rem;
+  }
+
   .btn-whatsapp {
-    padding: 14px 16px; /* Un poquito más alto para que sea más fácil de tocar con el dedo */
-    font-size: 0.95rem; /* Ajuste sutil de escala para pantallas chicas */
+    padding: 14px 16px;
+    font-size: 0.95rem;
   }
 }

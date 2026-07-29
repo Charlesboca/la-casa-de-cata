@@ -3,7 +3,6 @@ import { useParams, useLocation, Link } from 'react-router-dom';
 import { db } from '../firebase/firebaseConfig.js';
 import { doc, getDoc } from 'firebase/firestore';
 import ModalImagen from '../components/ModalImagen';
-// 1. Importamos el icono desde lucide-react
 import { Smartphone } from 'lucide-react';
 import '../estilos/ItemDetail.css';
 
@@ -45,42 +44,58 @@ export default function ItemDetail() {
 
   return (
     <div className="detalle-container">
+
+      {/* Botón de volver centrado */}
       <div className="volver-container">
         <Link to={rutaVolver} className="btn-volver-categoria">
           ← Volver a {producto.categoria || 'productos'}
         </Link>
       </div>
-      <img 
-        src={
-          producto.imagen && producto.imagen.includes('cloudinary.com')
-            ? producto.imagen.replace('/upload/', '/upload/w_600,c_scale,f_auto,q_auto/')
-            : (producto.imagen || 'https://via.placeholder.com/300')
-        } 
-        alt={producto.nombre} 
-        className="imagen-detalle" 
-        onClick={() => setShowModal(true)}
-        style={{ cursor: 'pointer' }}
-      />
-      {showModal && (
-        <ModalImagen 
-          src={producto.imagen} 
-          alt={producto.nombre} 
-          onClose={() => setShowModal(false)} 
-        />
-      )}
-      <h2 className="titulo-detalle">{producto.nombre}</h2>
-      <p className="descripcion">
-        {producto.descripcion}
-      </p>
-      <p className="precio">
-        ${Number(producto.precio || 0).toLocaleString('es-AR')}
-      </p>
 
-      {/* 2. Reemplazamos el emoji por el componente del icono */}
-      <button onClick={handleCompartirWhatsApp} className="btn-whatsapp">
-      <Smartphone size={22} strokeWidth={2.5} /> {/* Un poco más grande y grueso para que resalte */}
-        Compartir por WhatsApp
-      </button>
+      {/* Card principal */}
+      <div className="detalle-card">
+        <img 
+          src={
+            producto.imagen && producto.imagen.includes('cloudinary.com')
+              ? producto.imagen.replace('/upload/', '/upload/w_600,c_scale,f_auto,q_auto/')
+              : (producto.imagen || 'https://via.placeholder.com/300')
+          } 
+          alt={producto.nombre} 
+          className="imagen-detalle" 
+          onClick={() => setShowModal(true)}
+          style={{ cursor: 'pointer' }}
+        />
+        {showModal && (
+          <ModalImagen 
+            src={producto.imagen} 
+            alt={producto.nombre} 
+            onClose={() => setShowModal(false)} 
+          />
+        )}
+
+        <h2 className="titulo-detalle">{producto.nombre}</h2>
+
+        <div className="descripcion-container">
+          {producto.descripcion && producto.descripcion
+            .split('.')
+            .filter(parrafo => parrafo.trim() !== '')
+            .map((parrafo, index) => (
+              <p key={index} className="descripcion-linea">
+                {parrafo.trim()}.
+              </p>
+            ))
+          }
+        </div>
+
+        <p className="precio">
+          ${Number(producto.precio || 0).toLocaleString('es-AR')}
+        </p>
+        
+        <button onClick={handleCompartirWhatsApp} className="btn-whatsapp">
+          <Smartphone size={22} strokeWidth={2.5} />
+          Compartir por WhatsApp
+        </button>
+      </div>
 
     </div>
   );
