@@ -35,10 +35,19 @@ export default function Footer() {
         </div>
 
         {/* Columna 3: Ubicación */}
-        <div className="footer-column">
-          <h3>Ubicación</h3>
-          <p>Villa Margarita, La Leonesa</p>
-        </div>
+          <div className="footer-column">
+            <h3>Ubicación</h3>
+            <p>
+              <a 
+                href="https://maps.google.com/?q=Villa+Margarita+La+Leonesa+Chaco" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="enlace-mapa"
+              >
+                Villa Margarita, La Leonesa 📍
+              </a>
+            </p>
+          </div>
       </div>
       
       <div className="footer-bottom">

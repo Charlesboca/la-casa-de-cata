@@ -72,3 +72,14 @@
     justify-content: center;
   }
 }
+
+.enlace-mapa {
+  color: inherit; /* Mantiene el mismo color de letra que el resto de los textos del footer */
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.enlace-mapa:hover {
+  text-decoration: underline;
+  opacity: 0.85;
+}
