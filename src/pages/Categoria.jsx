@@ -30,8 +30,7 @@ export default function Categoria() {
           >
             <div className="icono">{cat.nombre ? cat.nombre[0] : 'C'}</div> 
             <h3>{cat.nombre || 'Sin nombre'}</h3>
-            <p>{cat.descripcion || 'Sin descripción'}</p>
-            
+        {/*  <p>{cat.descripcion || 'Sin descripción'}</p> */}            
             <img 
               src={cat.imagen} 
               alt={cat.nombre || 'Categoría'} 
