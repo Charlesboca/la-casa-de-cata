@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://lacasadecata.com.ar/sitemap.xml
+Disallow: /panel-producto/
