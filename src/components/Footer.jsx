@@ -51,11 +51,12 @@ export default function Footer() {
       </div>
       
       <div className="footer-bottom">
-        <p>&copy; {new Date().getFullYear()} La Casa de Cata. Todos los derechos reservados.</p>
-        <p className="footer-credits">
-          Desarrollado por <a href="https://mi-portfolio-carlos-avalos.vercel.app/" target="_blank" rel="noopener noreferrer">Carlos Avalos</a>
-        </p>
+          <p>&copy; {new Date().getFullYear()} La Casa de Cata. Todos los derechos reservados.</p>
+          <p className="footer-credits">
+            Desarrollado por <a href="https://mi-portfolio-carlos-avalos.vercel.app/" target="_blank" rel="noopener noreferrer" className="link-autor">Carlos Avalos</a>
+          </p>
       </div>
+
     </footer>
   );
 }

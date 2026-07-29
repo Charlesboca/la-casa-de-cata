@@ -83,3 +83,21 @@
   text-decoration: underline;
   opacity: 0.85;
 }
+
+.footer-credits {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  margin-top: 8px;
+}
+
+.footer-credits .link-autor {
+  color: #38bdf8; /* Color celeste brillante para que resalte tu nombre */
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+.footer-credits .link-autor:hover {
+  color: #7dd3fc; /* Un tono más claro al pasar el mouse */
+  text-decoration: underline;
+}
