@@ -47,7 +47,7 @@ export default function Inicio() {
                 <div className="horarios-grid">
                 <div className="horario-card">
                     <h3>Lunes a Viernes</h3>
-                    <p className="hora">08:00 - 12:00</p>
+                    <p className="hora">09:00 - 12:00</p>
                     <p className="hora">17:00 - 20:00</p>
 
                 </div>
