@@ -17,11 +17,11 @@ export const categoriasFijas = [
     descripcion: 'Cuadernos, lápices y más',
     imagen: '/imagenes/categorias/libreria.webp'
   },
-   {
-    id: '6',
-    nombre: 'Personal',
-    descripcion: 'Artículos personales y de cuidado',
-    imagen: '/imagenes/categorias/personal.webp'
+  {
+    id: '5',
+    nombre: 'Marroquineria',
+    descripcion: 'Artículos de marroquinería',
+    imagen: '/imagenes/categorias/marroquineria.webp'
   },
    {
     id: '4',
@@ -29,12 +29,11 @@ export const categoriasFijas = [
     descripcion: 'Artículos de mercería',
     imagen: '/imagenes/categorias/merceria.webp'
   },
-  {
-    id: '5',
-    nombre: 'Marroquineria',
-    descripcion: 'Artículos de marroquinería',
-    imagen: '/imagenes/categorias/marroquineria.webp'
+   {
+    id: '6',
+    nombre: 'Personal',
+    descripcion: 'Artículos personales y de cuidado',
+    imagen: '/imagenes/categorias/personal.webp'
   }
-  
   
 ];
