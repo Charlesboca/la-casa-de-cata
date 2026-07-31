@@ -18,19 +18,19 @@ export const categoriasFijas = [
     imagen: '/imagenes/categorias/libreria.webp'
   },
    {
-    id: '4',
+    id: '6',
     nombre: 'Personal',
     descripcion: 'Artículos personales y de cuidado',
     imagen: '/imagenes/categorias/personal.webp'
   },
    {
-    id: '5',
+    id: '4',
     nombre: 'Merceria',
     descripcion: 'Artículos de mercería',
     imagen: '/imagenes/categorias/merceria.webp'
   },
   {
-    id: '6',
+    id: '5',
     nombre: 'Marroquineria',
     descripcion: 'Artículos de marroquinería',
     imagen: '/imagenes/categorias/marroquineria.webp'
