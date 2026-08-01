@@ -1,11 +1,11 @@
 .grid-productos {
   display: grid;
-  /* Cambié 250px a 200px para que las tarjetas sean más pequeñas */
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
-  padding: 20px;
-  max-width: 1000px; /* Opcional: limita el ancho total para que no se expandan infinitamente */
-  margin: 0 auto;    /* Centra todo el grid en la pantalla */
+  padding: 20px 15px; /* Ajustado para celulares */
+  max-width: 1000px;
+  margin: 0 auto;
+  box-sizing: border-box; /* ¡Clave para que el padding no rompa el ancho del celu! */
 }
 
 .tarjeta-producto-link {
@@ -69,13 +69,13 @@
 
 .contenedor-volver {
   width: 100%;
-  max-width: 1000px; /* Alineado al ancho máximo de tu grid de productos */
-  margin: 0 auto;    /* Centra el contenedor en la pantalla */
-  padding: 20px 20px 0;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px 15px 0; /* Bajé un poco el padding lateral por las dudas */
   display: flex;
-  justify-content: center; /* 👈 Esto centra el botón perfectamente */
+  justify-content: center;
+  box-sizing: border-box; /* Evita que el padding sume ancho extra */
 }
-
 
 .btn-volver {
   display: inline-flex;
@@ -100,4 +100,38 @@
   background-color: #3e5871; /* Un color un poquito más claro al pasar el mouse */
   transform: translateY(-2px); /* Un pequeño efecto de elevación */
   cursor: pointer;
+}
+
+section {
+  width: 100%;
+  overflow-x: hidden; /* Esto corta cualquier elemento rebelde que quiera ensanchar la pantalla */
+  box-sizing: border-box;
+}
+
+/* 📱 Media Query para Celulares */
+@media (max-width: 576px) {
+  .grid-productos {
+    /* Forzamos 2 columnas iguales en el celu para que aproveche bien el ancho */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px; /* Reducimos un poco el espacio entre tarjetas */
+    padding: 10px;
+  }
+
+  .titulo-categoria {
+    font-size: 1.5rem; /* Achicamos un poco el título para que no rompa líneas */
+    margin: 25px auto 20px auto;
+  }
+
+  .tarjeta-producto h3 {
+    font-size: 1rem; /* Letra del producto más compacta */
+    margin: 0 0 8px;
+  }
+
+  .producto-img {
+    height: 120px; /* Imagen un poco más baja para optimizar espacio vertical en celu */
+  }
+
+  .tarjeta-producto {
+    border-radius: 8px;
+  }
 }
