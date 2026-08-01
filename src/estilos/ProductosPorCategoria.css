@@ -111,10 +111,9 @@ section {
 /* 📱 Media Query para Celulares */
 @media (max-width: 576px) {
   .grid-productos {
-    /* Forzamos 2 columnas iguales en el celu para que aproveche bien el ancho */
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px; /* Reducimos un poco el espacio entre tarjetas */
-    padding: 10px;
+    /* Forzamos 1 columna en el celu para que aproveche bien el ancho */
+   grid-template-columns: 1fr; /* 👈 Forzamos una sola columna */
+    padding: 10px 15px;
   }
 
   .titulo-categoria {
