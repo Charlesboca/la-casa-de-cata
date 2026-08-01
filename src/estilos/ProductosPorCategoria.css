@@ -1,11 +1,17 @@
+section {
+  width: 100%;
+  overflow-x: hidden; /* Corta cualquier desborde lateral para evitar scroll horizontal */
+  box-sizing: border-box;
+}
+
 .grid-productos {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
-  padding: 20px 15px; /* Ajustado para celulares */
+  padding: 20px 15px; 
   max-width: 1000px;
   margin: 0 auto;
-  box-sizing: border-box; /* ¡Clave para que el padding no rompa el ancho del celu! */
+  box-sizing: border-box; /* Clave para que el padding no rompa el ancho */
 }
 
 .tarjeta-producto-link {
@@ -21,116 +27,140 @@
     transition: .25s;
 }
 
-.tarjeta-producto:hover{
+.tarjeta-producto:hover {
     transform: translateY(-6px);
     box-shadow: 0 15px 35px rgba(0,0,0,.18);
 }
-
-
 
 .tarjeta-producto p {
   color: #666;
 }
 
 .producto-img {
-  width: 100%;       /* Cambiado de 50% a 100% */
-  height: 150px;     /* Ajustá este valor según qué tan "baja" quieras la tarjeta */
+  width: 100%;      
+  height: 150px;    
   object-fit: cover;
   display: block;
-  background-color: #2a2a2a; /* Fondo gris oscuro mientras carga la foto */
+  background-color: #2a2a2a; 
 }
 
-.tarjeta-producto-info{
-    padding:18px;
+.tarjeta-producto-info {
+    padding: 18px;
 }
 
-.tarjeta-producto h3{
-    margin:0 0 12px;
-    font-size:1.2rem;
+.tarjeta-producto h3 {
+    margin: 0 0 12px;
+    font-size: 1.2rem;
 }
 
-.precio{
-    color:#d62828;
-    font-size:1.3rem;
-    font-weight:bold;
+.precio {
+    color: #d62828;
+    font-size: 1.3rem;
+    font-weight: bold;
 }
 
 .titulo-categoria {
   font-size: 2rem;
   color: #2c3e50;
-  margin: 40px auto 30px auto; /* 'auto' a los lados centra el bloque */
+  margin: 40px auto 30px auto; 
   text-transform: capitalize;
   font-weight: 700;
   border-bottom: 3px solid #ff5733;
   padding-bottom: 10px;
-  display: block;             /* Cambiamos de inline-block a block */
-  width: fit-content;         /* Hace que el bloque ocupe solo lo que mide el texto */
+  display: block;            
+  width: fit-content;        
 }
 
 .contenedor-volver {
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
-  padding: 20px 15px 0; /* Bajé un poco el padding lateral por las dudas */
+  padding: 20px 15px 0; 
   display: flex;
   justify-content: center;
-  box-sizing: border-box; /* Evita que el padding sume ancho extra */
+  box-sizing: border-box; 
 }
 
 .btn-volver {
   display: inline-flex;
   align-items: center;
   text-decoration: none;
-  
-  /* Colores sólidos */
-  background-color: #2c3e50; /* Un tono oscuro que combina con tu header/footer */
-  color: white;              /* Letra blanca para contrastar */
-  
-  /* Formato del botón */
+  background-color: #2c3e50; 
+  color: white;              
   padding: 8px 16px;
-  border-radius: 8px;        /* Bordes redondeados */
+  border-radius: 8px;        
   font-weight: 500;
   font-size: 0.9rem;
-  
-  /* Transición suave al pasar el mouse */
   transition: background-color 0.3s ease, transform 0.2s;
 }
 
 .btn-volver:hover {
-  background-color: #3e5871; /* Un color un poquito más claro al pasar el mouse */
-  transform: translateY(-2px); /* Un pequeño efecto de elevación */
+  background-color: #3e5871; 
+  transform: translateY(-2px); 
   cursor: pointer;
 }
 
-section {
+/* 🔍 Estilos nuevos para el buscador */
+.contenedor-buscador {
   width: 100%;
-  overflow-x: hidden; /* Esto corta cualquier elemento rebelde que quiera ensanchar la pantalla */
+  max-width: 1000px;
+  margin: 0 auto 10px auto;
+  padding: 0 15px;
   box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+}
+
+.input-buscador {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+}
+
+.input-buscador:focus {
+  border-color: #2c3e50;
+}
+
+.sin-productos {
+  text-align: center;
+  grid-column: 1 / -1;
+  padding: 30px;
+  color: #666;
+  font-size: 1.1rem;
 }
 
 /* 📱 Media Query para Celulares */
 @media (max-width: 576px) {
   .grid-productos {
-    /* Forzamos 1 columna en el celu para que aproveche bien el ancho */
-   grid-template-columns: 1fr; /* 👈 Forzamos una sola columna */
+    grid-template-columns: 1fr; /* Forzamos una sola columna en celu */
     padding: 10px 15px;
   }
 
   .titulo-categoria {
-    font-size: 1.5rem; /* Achicamos un poco el título para que no rompa líneas */
+    font-size: 1.5rem; 
     margin: 25px auto 20px auto;
   }
 
   .tarjeta-producto h3 {
-    font-size: 1rem; /* Letra del producto más compacta */
+    font-size: 1rem; 
     margin: 0 0 8px;
   }
 
   .producto-img {
-    height: 120px; /* Imagen un poco más baja para optimizar espacio vertical en celu */
+    height: 120px; 
   }
 
   .tarjeta-producto {
     border-radius: 8px;
+  }
+
+  .input-buscador {
+    max-width: 100%;
   }
 }

@@ -9,6 +9,7 @@ export default function ProductosPorCategoria() {
   const { catName } = useParams();
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [busqueda, setBusqueda] = useState(''); // Estado para la barra de búsqueda
 
   useEffect(() => {
     window.scrollTo({
@@ -18,6 +19,7 @@ export default function ProductosPorCategoria() {
 
     const fetchProductos = async () => {
       setLoading(true);
+      setBusqueda(''); // Limpiamos la búsqueda al cambiar de categoría
       try {
         const q = query(collection(db, "productos"), where("categoria", "==", catName));
         const querySnapshot = await getDocs(q);
@@ -41,6 +43,11 @@ export default function ProductosPorCategoria() {
     fetchProductos();
   }, [catName]);
 
+  // 🔍 Filtramos los productos según lo que escriba el usuario en el buscador
+  const productosFiltrados = productos.filter(prod =>
+    prod.nombre.toLowerCase().includes(busqueda.toLowerCase())
+  );
+
   return (
     <section>
       <div className="contenedor-volver">
@@ -53,6 +60,19 @@ export default function ProductosPorCategoria() {
          {catName}
       </h2>
 
+      {/* 🔍 Input de búsqueda integrado */}
+      {!loading && productos.length > 0 && (
+        <div className="contenedor-buscador">
+          <input 
+            type="text" 
+            placeholder={`Buscar en ${catName}...`} 
+            value={busqueda}
+            onChange={(e) => setBusqueda(e.target.value)}
+            className="input-buscador"
+          />
+        </div>
+      )}
+
       {loading ? (
         <div className="grid-productos">
             <SkeletonProducto />
@@ -61,8 +81,8 @@ export default function ProductosPorCategoria() {
         </div>
       ) : (
         <div className="grid-productos">
-          {productos.length > 0 ? (
-            productos.map(prod => (
+          {productosFiltrados.length > 0 ? (
+            productosFiltrados.map(prod => (
               <Link 
                 to={`/producto/${prod.id}`} 
                 state={{ producto: prod }} 
@@ -80,13 +100,15 @@ export default function ProductosPorCategoria() {
                     className="producto-img"
                     loading="lazy"
                   />
-                  <h3>{prod.nombre}</h3>
-                  <p>Precio: ${prod.precio}</p>
+                  <div className="tarjeta-producto-info">
+                    <h3>{prod.nombre}</h3>
+                    <p>Precio: ${prod.precio}</p>
+                  </div>
                 </div>
               </Link>
             ))
           ) : (
-            <p>No hay productos en esta categoría todavía.</p>
+            <p className="sin-productos">No se encontraron productos con ese nombre.</p>
           )}
         </div>
       )}
