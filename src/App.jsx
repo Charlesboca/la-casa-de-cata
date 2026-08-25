@@ -1,6 +1,8 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout.jsx';
+import PanelAdministracion from './components/PanelAdministracion';
+import PageNotFound from './components/PageNotFound'; // <--- 1. Importás el componente
 
 // 1. Convertimos tus importaciones normales en carga perezosa (lazy)
 const Inicio = lazy(() => import('./pages/Inicio.jsx'));
@@ -27,6 +29,8 @@ function App() {
             <Route path="/productos/:catName" element={<ProductosPorCategoria />} />
             <Route path="/producto/:id" element={<ItemDetail />} />
             <Route path="/panel-producto" element={<FormularioProducto />} />
+            <Route path="/Bover" element={<PanelAdministracion />} />
+            <Route path="*" element={<PageNotFound />} /> {/* <--- 2. Añadimos la ruta para manejar páginas no encontradas */}
           </Routes>
         </Suspense>
       </Layout>

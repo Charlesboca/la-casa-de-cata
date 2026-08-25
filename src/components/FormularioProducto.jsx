@@ -1,26 +1,30 @@
 import { useState, useEffect, useRef } from 'react';
 import { db } from '../firebase/firebaseConfig.js';
-import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, deleteDoc, doc, getDocs } from 'firebase/firestore';
 import '../estilos/FormularioProducto.css';
 
-export default function FormularioProducto({ onProductoAgregado }) {
+export default function FormularioProducto({ productoAEditar, onProductoGuardado, onCancelarEdicion }) {
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [precio, setPrecio] = useState('');
   const [categoria, setCategoria] = useState('');
   
-  const [imagenFile, setImagenFile] = useState(null);
+  // Soporte para múltiples archivos e imágenes existentes
+  const [imagenesFiles, setImagenesFiles] = useState([]);
+  const [imagenesExistentes, setImagenesExistentes] = useState([]); 
+  
   const [listaCategorias, setListaCategorias] = useState([]);
   const [cargando, setCargando] = useState(false);
   const [mensaje, setMensaje] = useState({ texto: '', tipo: '' });
   
-  // 👈 Nuevo estado para controlar la visibilidad del Modal
   const [modalAbierto, setModalAbierto] = useState(false);
+  const [nombreGuardado, setNombreGuardado] = useState('');
   
   const inputFileRef = useRef(null);
 
-  const [nombreGuardado, setNombreGuardado] = useState(''); // 👈 Nuevo estado
+  const esEdicion = Boolean(productoAEditar);
 
+  // Cargar categorías iniciales
   useEffect(() => {
     const fetchCategorias = async () => {
       try {
@@ -30,7 +34,7 @@ export default function FormularioProducto({ onProductoAgregado }) {
           ...doc.data()
         }));
         setListaCategorias(categoriasData);
-        if (categoriasData.length > 0) {
+        if (!esEdicion && categoriasData.length > 0) {
           setCategoria(categoriasData[0].nombre.toLowerCase());
         }
       } catch (error) {
@@ -38,7 +42,65 @@ export default function FormularioProducto({ onProductoAgregado }) {
       }
     };
     fetchCategorias();
-  }, []);
+  }, [esEdicion]);
+
+  // Si pasamos un producto para editar, rellenamos el formulario
+  useEffect(() => {
+    if (productoAEditar) {
+      setNombre(productoAEditar.nombre || '');
+      setDescripcion(productoAEditar.descripcion || '');
+      setPrecio(productoAEditar.precio || '');
+      setCategoria(productoAEditar.categoria || '');
+      
+      // Manejamos si el producto viejo tiene un array de imágenes o una sola foto suelta ("imagen")
+      if (productoAEditar.imagenes && Array.isArray(productoAEditar.imagenes)) {
+        setImagenesExistentes(productoAEditar.imagenes);
+      } else if (productoAEditar.imagen) {
+        setImagenesExistentes([productoAEditar.imagen]);
+      } else {
+        setImagenesExistentes([]);
+      }
+    } else {
+      limpiarFormulario();
+    }
+  }, [productoAEditar]);
+
+  const limpiarFormulario = () => {
+    setNombre('');
+    setDescripcion('');
+    setPrecio('');
+    setImagenesFiles([]);
+    setImagenesExistentes([]);
+    if (inputFileRef.current) {
+      inputFileRef.current.value = '';
+    }
+  };
+
+  // Función para subir múltiples imágenes a Cloudinary
+  const subirImagenesACloudinary = async () => {
+    let urlsSubidas = [];
+    
+    for (let file of imagenesFiles) {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "rowasound_upload"); // Reemplazá con tu preset de Cloudinary si usás otro
+      
+      try {
+        const res = await fetch("https://api.cloudinary.com/v1_1/djl3xx2lo/image/upload", { 
+          method: "POST", 
+          body: formData 
+        });
+        const data = await res.json();
+        if (data.secure_url) {
+          urlsSubidas.push(data.secure_url);
+        }
+      } catch (error) {
+        console.error("Error al subir imagen a Cloudinary:", error);
+      }
+    }
+    
+    return urlsSubidas;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -52,72 +114,96 @@ export default function FormularioProducto({ onProductoAgregado }) {
     setMensaje({ texto: '', tipo: '' });
 
     try {
-      let imagenUrl = 'https://via.placeholder.com/150';
+      // 1. Subimos las nuevas fotos seleccionadas
+      const nuevasUrls = await subirImagenesACloudinary();
 
-      if (imagenFile) {
-        const formData = new FormData();
-        formData.append("file", imagenFile);
-        formData.append("upload_preset", "rowasound_upload");
-        
-        const res = await fetch("https://api.cloudinary.com/v1_1/djl3xx2lo/image/upload", { 
-          method: "POST", 
-          body: formData 
-        });
-        const data = await res.json();
-        
-        if (data.secure_url) {
-          imagenUrl = data.secure_url;
-        }
-      }
-
-      // Si Firebase guarda correctamente, avanza sin ir al catch
-      await addDoc(collection(db, "productos"), {
-        nombre: nombre.trim(),
-        descripcion: descripcion.trim(),
-        precio: Number(precio),
-        categoria: categoria.toLowerCase().trim(),
-        imagen: imagenUrl,
-        createdAt: new Date()
-      });
-
-      // Guardamos el nombre en una variable temporal antes de limpiar el estado
-     // ❌ Borrá esto:
-      // const nombreGuardado = nombre;
-
-      // ✅ Poné esto en su lugar:
-      setNombreGuardado(nombre.trim());
-
-      // 🚀 Activamos el modal de éxito
-      setModalAbierto(true);
+      // 2. Combinamos las imágenes que ya tenía (si está editando) con las nuevas
+      const todasLasImagenes = [...imagenesExistentes, ...nuevasUrls];
       
-      // Limpiamos los campos
-      setNombre('');
-      setDescripcion('');
-      setPrecio('');
-      setImagenFile(null);
+      // Si no hay ninguna imagen, dejamos un placeholder por defecto
+      const galeriaFinal = todasLasImagenes.length > 0 ? todasLasImagenes : ['https://via.placeholder.com/150'];
 
-      if (inputFileRef.current) {
-        inputFileRef.current.value = '';
+      if (esEdicion) {
+        // --- MODIFICACIÓN ---
+        const productoRef = doc(db, "productos", productoAEditar.id);
+        await updateDoc(productoRef, {
+          nombre: nombre.trim(),
+          descripcion: descripcion.trim(),
+          precio: Number(precio),
+          categoria: categoria.toLowerCase().trim(),
+          imagenes: galeriaFinal,
+          imagen: galeriaFinal[0] // Mantenemos la principal en el campo 'imagen' por compatibilidad
+        });
+        setNombreGuardado(nombre.trim());
+        setModalAbierto(true);
+      } else {
+        // --- ALTA (CREACIÓN) ---
+        await addDoc(collection(db, "productos"), {
+          nombre: nombre.trim(),
+          descripcion: descripcion.trim(),
+          precio: Number(precio),
+          categoria: categoria.toLowerCase().trim(),
+          imagenes: galeriaFinal,
+          imagen: galeriaFinal[0],
+          createdAt: new Date()
+        });
+        setNombreGuardado(nombre.trim());
+        setModalAbierto(true);
+        limpiarFormulario();
       }
 
-      if (onProductoAgregado) {
-        onProductoAgregado();
+      if (onProductoGuardado) {
+        onProductoGuardado();
       }
 
     } catch (error) {
-      console.error("Error al agregar el producto: ", error);
+      console.error("Error al guardar el producto: ", error);
       setMensaje({ texto: 'Hubo un error al guardar el producto. Intentá de nuevo.', tipo: 'error' });
     } finally {
       setCargando(false);
     }
   };
 
+  // Función de Borrado rápido si querés incluirla acá o en la lista
+  const handleDelete = async () => {
+    if (!productoAEditar) return;
+    
+    const confirmar = window.confirm(`¿Estás seguro de eliminar el producto "${productoAEditar.nombre}"?`);
+    if (!confirmar) return;
+
+    setCargando(true);
+    try {
+      await deleteDoc(doc(db, "productos", productoAEditar.id));
+      alert('Producto eliminado correctamente.');
+      limpiarFormulario();
+      if (onProductoGuardado) onProductoGuardado();
+      if (onCancelarEdicion) onCancelarEdicion();
+    } catch (error) {
+      console.error("Error al eliminar:", error);
+      setMensaje({ texto: 'Error al intentar eliminar el producto.', tipo: 'error' });
+    } finally {
+      setCargando(false);
+    }
+  };
+
+  const eliminarImagenExistente = (indexParaBorrar) => {
+    setImagenesExistentes(imagenesExistentes.filter((_, index) => index !== indexParaBorrar));
+  };
+
   return (
     <> 
-      <h1 className="titulo-principal-formulario">Agregar Producto</h1>
+      <div className="encabezado-form-accion">
+        <h1 className="titulo-principal-formulario">
+          {esEdicion ? 'Modificar Producto' : 'Agregar Producto'}
+        </h1>
+        {esEdicion && (
+          <button type="button" className="btn-cancelar-edicion" onClick={onCancelarEdicion}>
+            Cancelar Edición
+          </button>
+        )}
+      </div>
 
       <div className="formulario-contenedor">
-        
         {mensaje.texto && (
           <div className={`mensaje-alerta ${mensaje.tipo}`}>
             {mensaje.texto}
@@ -170,37 +256,68 @@ export default function FormularioProducto({ onProductoAgregado }) {
             </select>
           </div>
 
+          {/* SECCIÓN DE MÚLTIPLES IMÁGENES */}
           <div className="formulario-grupo">
-            <label>Imagen del producto:</label>
+            <label>Imágenes del producto (Podés seleccionar varias):</label>
             <input 
               type="file" 
               ref={inputFileRef} 
+              multiple
               accept="image/*"
-              onChange={(e) => setImagenFile(e.target.files[0])} 
+              onChange={(e) => setImagenesFiles(Array.from(e.target.files))} 
               style={{ color: '#ccc' }}
             />
           </div>
 
-          <button 
-            type="submit" 
-            className="btn-guardar"
-            disabled={cargando}
-          >
-            {cargando ? 'Subiendo imagen y guardando...' : 'Guardar Producto'}
-          </button>
+          {/* Previsualización de imágenes ya guardadas (si está editando) */}
+          {imagenesExistentes.length > 0 && (
+            <div className="preview-imagenes-container">
+              <label>Imágenes actuales:</label>
+              <div className="grid-miniaturas-preview">
+                {imagenesExistentes.map((url, idx) => (
+                  <div key={idx} className="miniatura-box">
+                    <img src={url} alt="preview" />
+                    <button type="button" onClick={() => eliminarImagenExistente(idx)}>❌</button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="contenedor-botones-accion">
+            <button 
+              type="submit" 
+              className="btn-guardar"
+              disabled={cargando}
+            >
+              {cargando ? 'Procesando imágenes y guardando...' : (esEdicion ? 'Actualizar Producto' : 'Guardar Producto')}
+            </button>
+
+            {esEdicion && (
+              <button 
+                type="button" 
+                className="btn-eliminar-rojo" 
+                onClick={handleDelete}
+                disabled={cargando}
+              >
+                Eliminar Producto
+              </button>
+            )}
+          </div>
         </form>
       </div>
 
-      {/* 🌟 MODAL DE ÉXITO */}
       {modalAbierto && (
         <div className="modal-overlay">
           <div className="modal-contenido">
             <h3>¡Éxito! 🎉</h3>
-            {/* 👈 Acá usamos la variable temporal que no se borró */}
-            <p>El producto <strong>{nombreGuardado}</strong> se guardó correctamente en La Casa de Cata.</p>
-                        <button 
+            <p>El producto <strong>{nombreGuardado}</strong> se {esEdicion ? 'actualizó' : 'guardó'} correctamente en La Casa de Cata.</p>
+            <button 
               className="btn-cerrar-modal" 
-              onClick={() => setModalAbierto(false)}
+              onClick={() => {
+                setModalAbierto(false);
+                if (esEdicion && onCancelarEdicion) onCancelarEdicion();
+              }}
             >
               Aceptar
             </button>

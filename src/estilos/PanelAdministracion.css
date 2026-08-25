@@ -1,0 +1,114 @@
+/* Contenedor principal */
+.panel-admin-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: sans-serif;
+}
+
+/* Línea divisoria */
+.panel-admin-divider {
+  margin: 50px 0;
+  border-color: #444;
+}
+
+/* Sección del listado */
+.panel-admin-listado-section {
+  width: 100%;
+}
+
+.panel-admin-titulo {
+  color: #2c3e50; /* Un gris oscuro/azulado muy elegante y legible */
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 3px solid #e67e22; /* Una línea decorativa sutil abajo con color de acento */
+  padding-bottom: 8px;
+  display: inline-block;
+  /* Agregamos esto para centrarlo en la pantalla */
+  width: 100%;
+  text-align: center;
+}
+
+.panel-admin-mensaje {
+  color: #aaa;
+}
+
+/* Grilla de productos */
+.panel-admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* Tarjeta individual de producto */
+.panel-admin-card {
+  background: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.panel-admin-card-img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  background: #333;
+}
+
+.panel-admin-card-categoria {
+  font-size: 0.75rem;
+  color: #e67e22;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.panel-admin-card-nombre {
+  color: #fff;
+  font-size: 1rem;
+  margin: 4px 0 8px 0;
+}
+
+.panel-admin-card-precio {
+  color: #2ecc71;
+  font-weight: bold;
+  margin: 0 0 12px 0;
+  font-size: 1.1rem;
+}
+
+/* Botones de la tarjeta */
+.panel-admin-card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-admin {
+  flex: 1;
+  border: none;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #fff;
+  transition: opacity 0.2s ease;
+}
+
+.btn-admin:hover {
+  opacity: 0.85;
+}
+
+.btn-editar {
+  background: #2980b9;
+}
+
+.btn-borrar {
+  background: #c0392b;
+}
