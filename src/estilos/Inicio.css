@@ -35,10 +35,19 @@
   text-align: center;
 }
 
-.titulo-seccion {
-  font-size: 2rem;
-  color: #2c3e50;
-  margin-bottom: 40px;
+/* --- CINTILLO / TÍTULO DESTACADO LLAMATIVO --- */
+.titulo-banner-destacado {
+  background-color: #e11d48; /* Fondo rojo fuerte de oferta */
+  color: #ffffff;            /* Letras blancas */
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-align: center;
+  padding: 15px 20px;
+  margin: 0 auto 35px auto;  /* Espacio con la tarjeta de abajo */
+  max-width: 800px;          /* Ancho máximo para que no sea una tira infinita en pantallas gigantes */
+  border-radius: 8px;        /* Bordes ligeramente redondeados */
+  box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3); /* Sombrita suave */
+  letter-spacing: 0.5px;
 }
 
 .grid-servicios {
@@ -98,3 +107,170 @@
   flex-direction: column;
 }
 
+/* --- SECCIÓN Y TARJETA DESTACADO DE LA SEMANA --- */
+.seccion-destacado-home {
+  padding: 50px 20px;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+.tarjeta-destacado-home {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #e0f2fe; /* Celeste suave */
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease;
+  border: 1px solid #bae6fd; /* Un borde celeste un poco más marcado para que destaque */
+}
+
+.tarjeta-destacado-home:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.imagen-destacado-home {
+  width: 100%;
+  max-height: 320px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.titulo-producto-destacado {
+  color: #1e3a8a; /* Un azul más oscuro para que resalte bien sobre el celeste */
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.descripcion-producto-destacado {
+  color: #334155;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  text-align: left; /* O 'center' si preferís que quede centrado */
+}
+
+.precio-producto-destacado {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #e11d48;
+  margin-bottom: 20px;
+  background: #ffffff;
+  padding: 8px 20px;
+  border-radius: 30px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.btn-ver-tienda-destacado {
+  display: inline-block;
+  background-color: #1e3a8a;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.btn-ver-tienda-destacado:hover {
+  background-color: #1e293b;
+}
+
+/* --- ESTILOS PARA EL BADGE Y PRECIOS CON DESCUENTO --- */
+.tarjeta-destacado-home {
+  position: relative; /* Necesario para ubicar el badge flotando */
+}
+
+.badge-descuento-home {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: #e11d48; /* Rojo llamativo de oferta */
+  color: white;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 6px 12px;
+  border-radius: 20px;
+  box-shadow: 0 3px 8px rgba(225, 29, 72, 0.3);
+  letter-spacing: 0.5px;
+  z-index: 2;
+}
+
+.contenedor-precios-destacado {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.precio-tachado {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #64748b;
+  text-decoration: line-through;
+}
+
+.precio-producto-destacado {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #e11d48;
+  background: #ffffff;
+  padding: 6px 18px;
+  border-radius: 30px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* --- TÍTULO DE ESPECIFICACIONES --- */
+.titulo-especificaciones {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1e293b; /* Color oscuro profesional */
+  margin: 30px 0 15px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #e2e8f0; /* Línea separadora elegante */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+}
+
+/* Opcional: Un pequeño detalle visual (un iconito o punto de color al costado) */
+.titulo-especificaciones::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 20px;
+  background-color: #e11d48; /* El color rojo/rosado de oferta o acento de tu web */
+  border-radius: 4px;
+}
+
+/* --- BOTÓN DE WHATSAPP PARA LA OFERTA DE LA HOME --- */
+.btn-whatsapp-oferta {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #25d366; /* Verde oficial de WhatsApp */
+  color: white;
+  border: none;
+  padding: 12px 15px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  text-decoration: none;
+  box-shadow: 0 2px 5px rgba(37, 211, 102, 0.3);
+}
+
+.btn-whatsapp-oferta:hover {
+  background-color: #20ba5a;
+  transform: translateY(-2px);
+}

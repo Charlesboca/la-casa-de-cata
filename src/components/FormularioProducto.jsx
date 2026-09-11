@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { db } from '../firebase/firebaseConfig.js';
-import { collection, addDoc, updateDoc, deleteDoc, doc, getDocs } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, deleteDoc, doc, getDocs, query, where, writeBatch } from 'firebase/firestore';
 import '../estilos/FormularioProducto.css';
 
 export default function FormularioProducto({ productoAEditar, onProductoGuardado, onCancelarEdicion }) {
@@ -8,6 +8,9 @@ export default function FormularioProducto({ productoAEditar, onProductoGuardado
   const [descripcion, setDescripcion] = useState('');
   const [precio, setPrecio] = useState('');
   const [categoria, setCategoria] = useState('');
+  
+  // 👉 Estado para el producto destacado
+  const [destacado, setDestacado] = useState(false);
   
   // Soporte para múltiples archivos e imágenes existentes
   const [imagenesFiles, setImagenesFiles] = useState([]);
@@ -51,6 +54,8 @@ export default function FormularioProducto({ productoAEditar, onProductoGuardado
       setDescripcion(productoAEditar.descripcion || '');
       setPrecio(productoAEditar.precio || '');
       setCategoria(productoAEditar.categoria || '');
+      // 👉 Seteamos el estado de destacado si existe, sino false por defecto
+      setDestacado(Boolean(productoAEditar.destacado));
       
       // Manejamos si el producto viejo tiene un array de imágenes o una sola foto suelta ("imagen")
       if (productoAEditar.imagenes && Array.isArray(productoAEditar.imagenes)) {
@@ -69,6 +74,7 @@ export default function FormularioProducto({ productoAEditar, onProductoGuardado
     setNombre('');
     setDescripcion('');
     setPrecio('');
+    setDestacado(false); // 👉 Limpiamos el checkbox
     setImagenesFiles([]);
     setImagenesExistentes([]);
     if (inputFileRef.current) {
@@ -83,7 +89,7 @@ export default function FormularioProducto({ productoAEditar, onProductoGuardado
     for (let file of imagenesFiles) {
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("upload_preset", "rowasound_upload"); // Reemplazá con tu preset de Cloudinary si usás otro
+      formData.append("upload_preset", "rowasound_upload"); // Tu preset actual
       
       try {
         const res = await fetch("https://api.cloudinary.com/v1_1/djl3xx2lo/image/upload", { 
@@ -114,10 +120,26 @@ export default function FormularioProducto({ productoAEditar, onProductoGuardado
     setMensaje({ texto: '', tipo: '' });
 
     try {
+      // 👉 EXCLUSIVIDAD: Si este producto se marca como destacado, 
+      // buscamos y desactivamos cualquier otro que estuviera destacado antes.
+      if (destacado) {
+        const q = query(collection(db, "productos"), where("destacado", "==", true));
+        const querySnapshot = await getDocs(q);
+        const batch = writeBatch(db);
+        
+        querySnapshot.forEach((docSnap) => {
+          // Si estamos editando, evitamos apagar el producto actual
+          if (!esEdicion || docSnap.id !== productoAEditar.id) {
+            batch.update(docSnap.ref, { destacado: false });
+          }
+        });
+        await batch.commit();
+      }
+
       // 1. Subimos las nuevas fotos seleccionadas
       const nuevasUrls = await subirImagenesACloudinary();
 
-      // 2. Combinamos las imágenes que ya tenía (si está editando) con las nuevas
+      // 2. Combinamos las imágenes que ya tenía con las nuevas
       const todasLasImagenes = [...imagenesExistentes, ...nuevasUrls];
       
       // Si no hay ninguna imagen, dejamos un placeholder por defecto
@@ -131,8 +153,9 @@ export default function FormularioProducto({ productoAEditar, onProductoGuardado
           descripcion: descripcion.trim(),
           precio: Number(precio),
           categoria: categoria.toLowerCase().trim(),
+          destacado: destacado, // 👉 Guardamos el booleano exclusivo
           imagenes: galeriaFinal,
-          imagen: galeriaFinal[0] // Mantenemos la principal en el campo 'imagen' por compatibilidad
+          imagen: galeriaFinal[0] 
         });
         setNombreGuardado(nombre.trim());
         setModalAbierto(true);
@@ -143,6 +166,7 @@ export default function FormularioProducto({ productoAEditar, onProductoGuardado
           descripcion: descripcion.trim(),
           precio: Number(precio),
           categoria: categoria.toLowerCase().trim(),
+          destacado: destacado, // 👉 Guardamos el booleano exclusivo
           imagenes: galeriaFinal,
           imagen: galeriaFinal[0],
           createdAt: new Date()
@@ -164,7 +188,6 @@ export default function FormularioProducto({ productoAEditar, onProductoGuardado
     }
   };
 
-  // Función de Borrado rápido si querés incluirla acá o en la lista
   const handleDelete = async () => {
     if (!productoAEditar) return;
     
@@ -256,8 +279,22 @@ export default function FormularioProducto({ productoAEditar, onProductoGuardado
             </select>
           </div>
 
+          {/* 👉 CHECKBOX DE PRODUCTO DESTACADO (EXCLUSIVO) */}
+          <div className="formulario-grupo" style={{ flexDirection: 'row', alignItems: 'center', gap: '10px', marginTop: '10px' }}>
+            <input 
+              type="checkbox" 
+              id="destacadoCheck"
+              checked={destacado} 
+              onChange={(e) => setDestacado(e.target.checked)}
+              style={{ width: '20px', height: '20px', cursor: 'pointer' }}
+            />
+            <label htmlFor="destacadoCheck" style={{ cursor: 'pointer', color: '#fff', fontWeight: 'bold' }}>
+              ⭐ Marcar como Producto Destacado (Reemplazará al anterior en el Home)
+            </label>
+          </div>
+
           {/* SECCIÓN DE MÚLTIPLES IMÁGENES */}
-          <div className="formulario-grupo">
+          <div className="formulario-grupo" style={{ marginTop: '15px' }}>
             <label>Imágenes del producto (Podés seleccionar varias):</label>
             <input 
               type="file" 
