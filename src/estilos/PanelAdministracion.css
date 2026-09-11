@@ -112,3 +112,49 @@
 .btn-borrar {
   background: #c0392b;
 }
+
+/* --- MEDIA QUERY PARA CELULARES (Panel de Administración) --- */
+@media (max-width: 600px) {
+  .panel-admin-container {
+    padding: 10px; /* Reducimos los márgenes laterales para ganar espacio */
+  }
+
+  .panel-admin-titulo {
+    font-size: 1.4rem; /* Achicamos un poco el título para celulares */
+    letter-spacing: 0.5px;
+    margin-bottom: 20px;
+  }
+
+  .panel-admin-divider {
+    margin: 30px 0; /* Acortamos la línea divisoria */
+  }
+
+  /* Hacemos que las cards se adapten mejor a pantallas chicas */
+  .panel-admin-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); 
+    gap: 12px;
+  }
+
+  .panel-admin-card {
+    padding: 10px;
+  }
+
+  .panel-admin-card-img {
+    height: 120px; /* Bajamos un poco la altura de la foto en celu */
+  }
+
+  .panel-admin-card-nombre {
+    font-size: 0.95rem;
+  }
+
+  .panel-admin-card-precio {
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+
+  /* Botones un poco más cómodos para el dedo en táctil */
+  .btn-admin {
+    padding: 10px 6px;
+    font-size: 0.85rem;
+  }
+}

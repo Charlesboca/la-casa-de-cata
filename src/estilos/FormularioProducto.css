@@ -254,3 +254,35 @@ button[type="button"].btn-eliminar:hover {
 .btn-cancelar-edicion:hover {
   background-color: #5a6268;
 }
+
+/* --- MEDIA QUERY PARA CELULARES --- */
+@media (max-width: 600px) {
+  .formulario-contenedor {
+    width: 92%;
+    margin: 15px auto;
+    padding: 15px;
+  }
+
+  /* 👉 Agregamos esto para que el botón de cancelar respete el mismo ancho del form */
+  .btn-cancelar-edicion {
+    width: 92%;
+    margin: 15px auto 10px auto;
+  }
+
+  .titulo-principal-formulario {
+    font-size: 1.5rem;
+    margin-top: 25px;
+    margin-bottom: 15px;
+  }
+
+  .formulario-grupo input,
+  .formulario-grupo textarea,
+  .formulario-grupo select {
+    font-size: 16px; /* Evita el zoom automático en iOS */
+  }
+
+  .modal-contenido {
+    padding: 20px;
+    width: 95%;
+  }
+}
