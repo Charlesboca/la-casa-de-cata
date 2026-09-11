@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { db } from '../firebase/firebaseConfig.js';
 import { collection, query, where, getDocs, limit } from 'firebase/firestore';
-import { Smartphone } from 'lucide-react';
-
 import { MessageCircle } from 'lucide-react';
+
 import '../estilos/Inicio.css'; 
 import '../estilos/Horarios.css'; 
 
@@ -53,9 +52,10 @@ export default function Inicio() {
         const descuento = precioOriginal * 0.15;
         const precioConDescuento = Math.round(precioOriginal - descuento); // Redondeamos para que quede prolijo
 
-        // Función para compartir por WhatsApp con mensaje exclusivo para el destacado
+        // Función para compartir por WhatsApp con mensaje exclusivo para el destacado y su link directo
         const handleCompartirWhatsApp = () => {
-          const texto = `¡Hola! Me interesa la oferta de la semana en La Casa de Cata: *${productoDestacado.nombre}* a *$${precioConDescuento.toLocaleString('es-AR')}* (Antes *$${precioOriginal.toLocaleString('es-AR')}* - ¡15% OFF!). Lo vi en : ${window.location.href}`;
+          const urlProducto = `${window.location.origin}/producto/${productoDestacado.id}`;
+          const texto = `¡Hola! Me interesa la oferta de la semana en La Casa de Cata: *${productoDestacado.nombre}* a *$${precioConDescuento.toLocaleString('es-AR')}* (Antes *$${precioOriginal.toLocaleString('es-AR')}* - ¡15% OFF!). Lo vi acá: ${urlProducto}`;
           const urlWhatsApp = `https://api.whatsapp.com/send?text=${encodeURIComponent(texto)}`;
           window.open(urlWhatsApp, '_blank');
         };
@@ -115,7 +115,7 @@ export default function Inicio() {
               >
                 <MessageCircle size={20} strokeWidth={2.5} />
                 Compartir por WhatsApp
-            </button>
+              </button>
 
               </div>
 
