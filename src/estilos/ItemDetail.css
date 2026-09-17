@@ -8,16 +8,14 @@
   min-height: 80vh;
 }
 
-/* Contenedor del botón de volver (¡Aquí faltaba el flex y el justify-content!) */
 .volver-container {
   width: 100%;
   max-width: 600px;
   margin-bottom: 20px;
   display: flex;
-  justify-content: center; /* 👈 Esto centra el botón exactamente en el medio */
+  justify-content: center;
 }
 
-/* El botón / enlace de retorno */
 .btn-volver-categoria {
   text-decoration: none;
   color: #ffffff;
@@ -36,7 +34,6 @@
   transform: translateY(-1px);
 }
 
-/* 🎨 Estilo de la Card principal */
 .detalle-card {
   background: #ffffff;
   width: 100%;
@@ -49,24 +46,73 @@
   align-items: center;
   text-align: center;
   box-sizing: border-box;
+  position: relative;
 }
 
-/* Imagen dentro de la card */
+/* --- GALERÍA DE MULTI-IMÁGENES (ESCRITORIO) --- */
+.galeria-detalle-wrapper {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.miniaturas-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 350px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.miniatura-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  opacity: 0.7;
+  transition: all 0.2s ease;
+  flex-shrink: 0; /* Evita que se aplasten */
+}
+
+.miniatura-img:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.miniatura-img.activa {
+  border: 2px solid #e63946;
+  opacity: 1;
+}
+
+.imagen-principal-container {
+  flex: 1;
+  position: relative;
+  width: 100%;
+}
+
 .imagen-detalle {
   width: 100%;
   max-height: 350px;
   object-fit: contain;
   border-radius: 12px;
-  margin-bottom: 20px;
   background-color: #f1f5f9;
   transition: transform 0.3s ease;
+}
+
+.imagen-detalle.clickable {
+  cursor: pointer;
 }
 
 .imagen-detalle:hover {
   transform: scale(1.02);
 }
 
-/* Título */
+/* --- TÍTULO Y DESCRIPCIÓN --- */
 .titulo-detalle {
   font-size: 1.5rem;
   color: #1e293b;
@@ -74,7 +120,6 @@
   margin-bottom: 15px;
 }
 
-/* Descripción */
 .descripcion-container {
   display: flex;
   flex-direction: column;
@@ -91,7 +136,7 @@
   margin: 0;
 }
 
-/* Precio */
+/* --- PRECIOS --- */
 .precio {
   font-size: 1.8rem;
   color: #dc2626;
@@ -99,8 +144,28 @@
   margin-bottom: 20px;
 }
 
-/* Botón de WhatsApp */
-.btn-whatsapp {
+.contenedor-precios-detalle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin: 15px 0;
+}
+
+.precio-tachado-detalle {
+  font-size: 1.2rem;
+  color: #64748b;
+  text-decoration: line-through;
+  font-weight: 600;
+}
+
+.precio-oferta-detalle {
+  color: #e11d48;
+  margin: 0 !important;
+}
+
+/* --- BOTÓN DE WHATSAPP --- */
+.btn-whatsapp, .btn-whatsapp-oferta {
   background-color: #25D366;
   color: #ffffff;
   border: none;
@@ -115,31 +180,50 @@
   gap: 10px;
   width: 100%;
   transition: background-color 0.3s ease, transform 0.2s ease;
+  text-decoration: none;
 }
 
-.btn-whatsapp:hover {
+.btn-whatsapp:hover, .btn-whatsapp-oferta:hover {
   background-color: #20ba5a;
   transform: translateY(-2px);
 }
 
-/* 📱 Media query para celulares */
-@media (max-width: 768px) {
-  .detalle-card {
-    padding: 20px 15px;
-  }
-  
-  .titulo-detalle {
-    font-size: 1.3rem;
-  }
+.badge-oferta-detalle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #e11d48;
+  color: white;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 6px 14px;
+  border-radius: 20px;
+  box-shadow: 0 3px 8px rgba(225, 29, 72, 0.3);
+  z-index: 2;
+}
 
-  .precio {
-    font-size: 1.5rem;
-  }
+/* --- TÍTULO DE ESPECIFICACIONES --- */
+.titulo-especificaciones {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 30px 0 15px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  width: 100%;
+}
 
-  .btn-whatsapp {
-    padding: 14px 16px;
-    font-size: 0.95rem;
-  }
+.titulo-especificaciones::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 20px;
+  background-color: #e11d48;
+  border-radius: 4px;
 }
 
 /* --- ESTADOS DE CARGA Y ERROR --- */
@@ -169,127 +253,40 @@
   padding: 4rem 20px;
 }
 
-.detalle-no-encontrado h2 {
-  color: #1e293b;
-  margin-bottom: 10px;
-}
-
-.detalle-no-encontrado p {
-  color: #64748b;
-  margin-bottom: 20px;
-}
-
-/* --- ELEMENTOS NUEVOS EN LA CARD --- */
-.detalle-card {
-  position: relative; /* Clave para posicionar el badge absoluto */
-}
-
-.badge-oferta-detalle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: #e11d48;
-  color: white;
-  font-weight: 800;
-  font-size: 0.9rem;
-  padding: 6px 14px;
-  border-radius: 20px;
-  box-shadow: 0 3px 8px rgba(225, 29, 72, 0.3);
-  z-index: 2;
-}
-
-.imagen-detalle.clickable {
-  cursor: pointer;
-}
-
-.contenedor-precios-detalle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  margin: 15px 0;
-}
-
-.precio-tachado-detalle {
-  font-size: 1.2rem;
-  color: #64748b;
-  text-decoration: line-through;
-  font-weight: 600;
-}
-
-.precio-oferta-detalle {
-  color: #e11d48;
-  margin: 0 !important;
-}
-
-/* --- TÍTULO DE ESPECIFICACIONES --- */
-.titulo-especificaciones {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #1e293b; /* Color oscuro profesional */
-  margin: 30px 0 15px 0;
-  padding-bottom: 8px;
-  border-bottom: 2px solid #e2e8f0; /* Línea separadora elegante */
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-align: left;
-}
-
-/* Opcional: Un pequeño detalle visual (un iconito o punto de color al costado) */
-.titulo-especificaciones::before {
-  content: "";
-  display: inline-block;
-  width: 6px;
-  height: 20px;
-  background-color: #e11d48; /* El color rojo/rosado de oferta o acento de tu web */
-  border-radius: 4px;
-}
-
-/* --- GALERÍA DE MULTI-IMÁGENES --- */
-.galeria-detalle-wrapper {
-  display: flex;
-  gap: 15px;
-  align-items: flex-start;
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-.miniaturas-container {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  max-height: 350px;
-  overflow-y: auto;
-  padding-right: 4px;
-}
-
-.miniaturas-container img {
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.miniaturas-container img:hover {
-  opacity: 1;
-  transform: scale(1.05);
-}
-
-/* Ajuste para celulares: poner las miniaturas abajo de la foto principal si la pantalla es chica */
+/* 📱 RESPONSIVE PARA CELULARES (Aquí acomodamos las miniaturas en fila) */
 @media (max-width: 600px) {
+  .detalle-card {
+    padding: 20px 15px;
+  }
+  
+  .titulo-detalle {
+    font-size: 1.3rem;
+  }
+
+  .precio {
+    font-size: 1.5rem;
+  }
+
+  /* Cambiamos la dirección: foto arriba, miniaturas en una sola fila abajo */
   .galeria-detalle-wrapper {
-    flex-direction: column-reverse;
+    flex-direction: column;
     align-items: center;
   }
 
   .miniaturas-container {
-    flex-direction: row;
+    flex-direction: row;        /* 👈 Las pone una al lado de otra en fila */
     max-height: none;
     max-width: 100%;
-    overflow-x: auto;
-    padding-bottom: 5px;
+    overflow-x: auto;           /* 👈 Permite deslizar si hay muchas fotos */
+    overflow-y: hidden;
+    padding: 5px 0;
+    width: 100%;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
+  .miniatura-img {
+    width: 55px;
+    height: 55px;
   }
 }

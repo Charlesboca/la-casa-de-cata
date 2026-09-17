@@ -1,52 +1,38 @@
-import { useEffect, useState, useContext } from 'react'; // 1. Añadimos useContext
+import { useEffect, useState, useContext } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
 import { db } from '../firebase/firebaseConfig.js';
 import { doc, getDoc } from 'firebase/firestore';
 import ModalImagen from '../components/ModalImagen';
 import { Smartphone, Loader2, MessageCircle } from 'lucide-react';
 import '../estilos/ItemDetail.css';
-import { ProductosContext } from '../context/ProductosContext'; // 2. Importamos el Contexto global
+import { ProductosContext } from '../context/ProductosContext';
 
 export default function ItemDetail() {
 
-  // ==========================================
-  // CONFIGURACIÓN DE COLECCIÓN ("productos_test" o "productos")
-  // ==========================================
   const COLECCION_ACTIVA = "productos";
 
   const { id } = useParams();
   const location = useLocation();
 
-  // 3. Nos conectamos al "Wi-Fi" global para traer la lista completa de productos
   const { productos: productosGlobales } = useContext(ProductosContext);
 
-  // 4. BÚSQUEDA INTELIGENTE INICIAL (Estrategia Híbrida):
-  // Buscamos el producto en este orden de prioridad:
-  // 1ro: Si viene viajando en el state (clic directo desde una tarjeta).
-  // 2do: Si ya está descargado en el array global del Contexto.
-  // 3ro: Si no está en ninguno de los dos, arrancamos en null (cliente nuevo con link directo).
   const productoEnMemoria = location.state?.producto || productosGlobales.find(p => p.id === id);
 
   const [producto, setProducto] = useState(productoEnMemoria || null);
   const [cargando, setCargando] = useState(!productoEnMemoria);
   const [showModal, setShowModal] = useState(false);
   
-  // Estado para manejar la imagen seleccionada en la galería multimagen
   const [imagenActiva, setImagenActiva] = useState("");
 
-  // 5. EFECTO DE CARGA Y RESCATE A FIREBASE
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     
-    // Si ya lo encontramos en memoria (state o Contexto), apagamos la carga y cortamos acá
     if (productoEnMemoria) {
       setProducto(productoEnMemoria);
       setCargando(false);
       return;
     }
 
-    // PLAN DE EMERGENCIA (Cliente nuevo que entra por link directo):
-    // Como el Contexto global todavía no tiene datos, vamos a Firebase a buscar este producto puntual.
     const getProductoDirecto = async () => {
       try {
         setCargando(true);
@@ -64,9 +50,8 @@ export default function ItemDetail() {
     };
 
     getProductoDirecto();
-  }, [id, productoEnMemoria]); // Se ejecuta si cambia el ID o si el producto aparece en memoria
+  }, [id, productoEnMemoria]);
 
-  // Sincronizar la imagen activa cuando el producto se termina de cargar
   useEffect(() => {
     if (producto) {
       const lista = producto.imagenes?.length > 0 ? producto.imagenes : [producto.imagen];
@@ -74,7 +59,6 @@ export default function ItemDetail() {
     }
   }, [producto]);
 
-  // Pantalla de carga mientras resuelve si está en memoria o en Firebase
   if (cargando) {
     return (
       <div className="detalle-cargando-container">
@@ -84,7 +68,6 @@ export default function ItemDetail() {
     );
   }
 
-  // Pantalla por si el producto no existe ni en memoria ni en Firebase
   if (!producto) {
     return (
       <div className="detalle-no-encontrado">
@@ -105,10 +88,8 @@ export default function ItemDetail() {
   const precioOriginal = Number(producto.precio || 0);
   const precioFinal = esDestacado ? Math.round(precioOriginal * 0.85) : precioOriginal;
 
-  // Lista segura de imágenes (soporta array 'imagenes' o string viejo 'imagen')
   const listaImagenes = producto.imagenes?.length > 0 ? producto.imagenes : (producto.imagen ? [producto.imagen] : []);
 
-  // Imagen optimizada para Cloudinary basada en la que esté activa
   const imagenParaMostrar = imagenActiva && imagenActiva.includes('cloudinary.com')
     ? imagenActiva.replace('/upload/', '/upload/w_600,c_scale,f_auto,q_auto/')
     : (imagenActiva || 'https://via.placeholder.com/300');
@@ -144,40 +125,30 @@ export default function ItemDetail() {
         )}
 
         {/* CONTENEDOR DE GALERÍA (MINIATURAS + FOTO PRINCIPAL) */}
-        <div className="galeria-detalle-wrapper" style={{ display: 'flex', gap: '15px', alignItems: 'flex-start', width: '100%', marginBottom: '15px' }}>
+        <div className="galeria-detalle-wrapper">
           
           {/* LISTA DE MINIATURAS (Solo si hay más de 1 foto) */}
           {listaImagenes.length > 1 && (
-            <div className="miniaturas-container" style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxHeight: '350px', overflowY: 'auto' }}>
+            <div className="miniaturas-container">
               {listaImagenes.map((img, index) => (
                 <img
                   key={index}
                   src={img.includes('cloudinary.com') ? img.replace('/upload/', '/upload/w_100,c_scale,f_auto,q_auto/') : img}
                   alt={`${producto.nombre} - miniatura ${index + 1}`}
                   onClick={() => setImagenActiva(img)}
-                  style={{
-                    width: '60px',
-                    height: '60px',
-                    objectFit: 'cover',
-                    borderRadius: '6px',
-                    cursor: 'pointer',
-                    border: imagenActiva === img ? '2px solid #e63946' : '2px solid transparent',
-                    opacity: imagenActiva === img ? 1 : 0.7,
-                    transition: 'all 0.2s ease'
-                  }}
+                  className={imagenActiva === img ? 'miniatura-img activa' : 'miniatura-img'}
                 />
               ))}
             </div>
           )}
 
           {/* FOTO PRINCIPAL */}
-          <div style={{ flex: 1, position: 'relative' }}>
+          <div className="imagen-principal-container">
             <img 
               src={imagenParaMostrar} 
               alt={producto.nombre} 
               className="imagen-detalle clickable" 
               onClick={() => setShowModal(true)}
-              style={{ width: '100%', maxHeight: '400px', objectFit: 'contain', cursor: 'pointer' }}
             />
           </div>
         </div>
