@@ -1,8 +1,9 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ProductosProvider } from './context/ProductosContext'; // 👈 1. Importamos el Provider
 import Layout from './components/Layout.jsx';
 import PanelAdministracion from './components/PanelAdministracion';
-import PageNotFound from './components/PageNotFound'; // <--- 1. Importás el componente
+import PageNotFound from './components/PageNotFound';
 
 // 1. Convertimos tus importaciones normales en carga perezosa (lazy)
 const Inicio = lazy(() => import('./pages/Inicio.jsx'));
@@ -20,21 +21,23 @@ const LoadingFallback = () => (
 
 function App() {
   return (
-    <BrowserRouter>
-      <Layout>
-        <Suspense fallback={<LoadingFallback />}>
-          <Routes>
-            <Route path="/" element={<Inicio />} />
-            <Route path="/productos" element={<Categoria />} />
-            <Route path="/productos/:catName" element={<ProductosPorCategoria />} />
-            <Route path="/producto/:id" element={<ItemDetail />} />
-            <Route path="/panel-producto" element={<FormularioProducto />} />
-            <Route path="/Bover" element={<PanelAdministracion />} />
-            <Route path="*" element={<PageNotFound />} /> {/* <--- 2. Añadimos la ruta para manejar páginas no encontradas */}
-          </Routes>
-        </Suspense>
-      </Layout>
-    </BrowserRouter>
+    <ProductosProvider> {/* 👈 2. Envolvemos la app acá */}
+      <BrowserRouter>
+        <Layout>
+          <Suspense fallback={<LoadingFallback />}>
+            <Routes>
+              <Route path="/" element={<Inicio />} />
+              <Route path="/productos" element={<Categoria />} />
+              <Route path="/productos/:catName" element={<ProductosPorCategoria />} />
+              <Route path="/producto/:id" element={<ItemDetail />} />
+              <Route path="/panel-producto" element={<FormularioProducto />} />
+              <Route path="/Bover" element={<PanelAdministracion />} />
+              <Route path="*" element={<PageNotFound />} />
+            </Routes>
+          </Suspense>
+        </Layout>
+      </BrowserRouter>
+    </ProductosProvider>
   )
 }
 

@@ -245,3 +245,51 @@
   background-color: #e11d48; /* El color rojo/rosado de oferta o acento de tu web */
   border-radius: 4px;
 }
+
+/* --- GALERÍA DE MULTI-IMÁGENES --- */
+.galeria-detalle-wrapper {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.miniaturas-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 350px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.miniaturas-container img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.miniaturas-container img:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* Ajuste para celulares: poner las miniaturas abajo de la foto principal si la pantalla es chica */
+@media (max-width: 600px) {
+  .galeria-detalle-wrapper {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .miniaturas-container {
+    flex-direction: row;
+    max-height: none;
+    max-width: 100%;
+    overflow-x: auto;
+    padding-bottom: 5px;
+  }
+}

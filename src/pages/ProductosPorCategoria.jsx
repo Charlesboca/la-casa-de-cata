@@ -1,52 +1,37 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react'; // 1. Añadimos useContext
 import { useParams, Link } from 'react-router-dom';
-import { db } from '../firebase/firebaseConfig.js'; 
-import { collection, query, where, getDocs } from 'firebase/firestore';
+// ❌ Borramos los imports de Firebase porque ya no se consultan acá
 import SkeletonProducto from '../components/SkeletonProducto.jsx';
 import '../estilos/ProductosPorCategoria.css';
+import { ProductosContext } from '../context/ProductosContext'; // 2. Importamos el Contexto global
 
 export default function ProductosPorCategoria() {
+  // Capturamos la categoría actual desde la URL (ej: "bazar")
   const { catName } = useParams();
-  const [productos, setProductos] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [busqueda, setBusqueda] = useState(''); // Estado para la barra de búsqueda
 
+  // 3. Nos conectamos al Contexto global para extraer el catálogo completo y el estado de carga
+  const { productos: productosGlobales, cargando } = useContext(ProductosContext);
+
+  // Estado local exclusivo para la barra de búsqueda interna
+  const [busqueda, setBusqueda] = useState(''); 
+
+  // Efecto solo para scrollear arriba de todo al cambiar de categoría (ya no busca en Firebase)
   useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     });
-
-    const fetchProductos = async () => {
-      setLoading(true);
-      setBusqueda(''); // Limpiamos la búsqueda al cambiar de categoría
-      try {
-        const q = query(collection(db, "productos"), where("categoria", "==", catName));
-        const querySnapshot = await getDocs(q);
-        
-        const listaProductos = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
-        
-        // 🔤 Ordenamos alfabéticamente por nombre antes de meterlo al estado
-        listaProductos.sort((a, b) => a.nombre.localeCompare(b.nombre));
-        
-        setProductos(listaProductos);
-      } catch (error) {
-        console.error("Error al cargar productos:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProductos();
+    setBusqueda(''); // Limpiamos la búsqueda al cambiar de categoría
   }, [catName]);
 
-  // 🔍 Filtramos los productos según lo que escriba el usuario en el buscador
-  const productosFiltrados = productos.filter(prod =>
-    prod.nombre.toLowerCase().includes(busqueda.toLowerCase())
-  );
+  // 4. FILTRADO EN MEMORIA (Paso clave):
+  // Primero filtramos los productos globales que coincidan con la categoría de la URL (catName).
+  // Después, sobre esos mismos, filtramos los que coincidan con lo que el usuario tipea en el buscador.
+  const productosFiltrados = productosGlobales.filter(prod => {
+    const coincideCategoria = prod.categoria === catName;
+    const coincideBusqueda = prod.nombre.toLowerCase().includes(busqueda.toLowerCase());
+    return coincideCategoria && coincideBusqueda;
+  });
 
   return (
     <section>
@@ -60,8 +45,8 @@ export default function ProductosPorCategoria() {
          {catName}
       </h2>
 
-      {/* 🔍 Input de búsqueda integrado */}
-      {!loading && productos.length > 0 && (
+      {/* 🔍 Input de búsqueda (se muestra cuando termina de cargar el Provider) */}
+      {!cargando && productosGlobales.length > 0 && (
         <div className="contenedor-buscador">
           <input 
             type="text" 
@@ -73,7 +58,8 @@ export default function ProductosPorCategoria() {
         </div>
       )}
 
-      {loading ? (
+      {/* 5. Usamos el estado de carga 'cargando' que viene directamente del Contexto */}
+      {cargando ? (
         <div className="grid-productos">
             <SkeletonProducto />
             <SkeletonProducto />
@@ -96,7 +82,6 @@ export default function ProductosPorCategoria() {
                 >
                   <div className="tarjeta-producto" style={{ position: 'relative' }}>
                     
-                    {/* Badge de oferta si es el producto destacado */}
                     {esDestacado && (
                       <div className="badge-oferta-card" style={{
                         position: 'absolute',
@@ -127,7 +112,6 @@ export default function ProductosPorCategoria() {
                     <div className="tarjeta-producto-info">
                       <h3>{prod.nombre}</h3>
 
-                      {/* Renderizado de precios adaptado si es destacado */}
                       {esDestacado ? (
                         <div className="contenedor-precios-card" style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                           <span style={{ textDecoration: 'line-through', color: '#888', fontSize: '0.9rem' }}>
@@ -148,7 +132,7 @@ export default function ProductosPorCategoria() {
               );
             })
           ) : (
-            <p className="sin-productos">No se encontraron productos con ese nombre.</p>
+            <p className="sin-productos">No se encontraron productos con ese nombre en esta categoría.</p>
           )}
         </div>
       )}

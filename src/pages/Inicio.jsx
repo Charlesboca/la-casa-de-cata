@@ -1,22 +1,43 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { db } from '../firebase/firebaseConfig.js';
 import { collection, query, where, getDocs, limit } from 'firebase/firestore';
 import { MessageCircle } from 'lucide-react';
+import { ProductosContext } from '../context/ProductosContext'; // 1. Importamos el Contexto global
 
 import '../estilos/Inicio.css'; 
 import '../estilos/Horarios.css'; 
 
 export default function Inicio() {
-  const [productoDestacado, setProductoDestacado] = useState(null);
-  const [cargandoDestacado, setCargandoDestacado] = useState(true);
+  
+  // ==========================================
+  // CONFIGURACIÓN DE COLECCIÓN ACTIVA
+  // ==========================================
+  const COLECCION_ACTIVA = "productos"; // Podés cambiar a "productos_test" si lo usás para pruebas
 
-  // Consultar el producto destacado exclusivo
+  // 2. Nos conectamos al Contexto global para aprovechar los productos ya descargados
+  const { productos: productosGlobales } = useContext(ProductosContext);
+
+  // 3. BÚSQUEDA HÍBRIDA EN MEMORIA: Buscamos si ya hay un destacado en el Contexto
+  const productoEnMemoria = productosGlobales.find(p => p.destacado === true);
+
+  const [productoDestacado, setProductoDestacado] = useState(productoEnMemoria || null);
+  const [cargandoDestacado, setCargandoDestacado] = useState(!productoEnMemoria && productosGlobales.length === 0);
+
+  // Sincronizar por si el Contexto termina de cargar un poquito después
   useEffect(() => {
+    if (productoEnMemoria) {
+      setProductoDestacado(productoEnMemoria);
+      setCargandoDestacado(false);
+      return;
+    }
+
+    // PLAN DE EMERGENCIA: Si el contexto global está vacío, consultamos a Firebase directamente
     const fetchDestacado = async () => {
       try {
+        setCargandoDestacado(true);
         const q = query(
-          collection(db, "productos"), 
+          collection(db, COLECCION_ACTIVA), 
           where("destacado", "==", true), 
           limit(1)
         );
@@ -35,8 +56,12 @@ export default function Inicio() {
       }
     };
 
-    fetchDestacado();
-  }, []);
+    if (productosGlobales.length > 0) {
+      setCargandoDestacado(false);
+    } else {
+      fetchDestacado();
+    }
+  }, [productosGlobales, productoEnMemoria, COLECCION_ACTIVA]);
 
   return (
     <div className="inicio-container">
