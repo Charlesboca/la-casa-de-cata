@@ -12,7 +12,7 @@ export default function ItemDetail() {
   // ==========================================
   // CONFIGURACIÓN DE COLECCIÓN ("productos_test" o "productos")
   // ==========================================
-  const COLECCION_ACTIVA = "productos_test";
+  const COLECCION_ACTIVA = "productos";
 
   const { id } = useParams();
   const location = useLocation();

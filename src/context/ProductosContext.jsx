@@ -26,7 +26,7 @@ export const ProductosProvider = ({ children }) => {
   const [cargando, setCargando] = useState(true);
 
   // Definimos qué colección de Firebase vamos a consultar (tu base de prueba).
-  const COLECCION_ACTIVA = "productos_test"; 
+  const COLECCION_ACTIVA = "productos"; 
 
   // ==========================================
   // 3. EFECTO DE CARGA ÚNICA (EL LLAMADO A FIREBASE)
