@@ -5,6 +5,9 @@ import { collection, query, where, getDocs, limit } from 'firebase/firestore';
 import { MessageCircle } from 'lucide-react';
 import { ProductosContext } from '../context/ProductosContext'; // 1. Importamos el Contexto global
 
+// 🚀 IMPORTAMOS NUESTRO HELPER REUTILIZABLE
+import { optimizarImagen } from '../helpers/cloudinary';
+
 import '../estilos/Inicio.css'; 
 import '../estilos/Horarios.css'; 
 
@@ -97,11 +100,22 @@ export default function Inicio() {
                 🔥 15% OFF
               </div>
 
-              <img 
-                src={productoDestacado.imagen || productoDestacado.imagenes?.[0]} 
+           {/*    <img 
+                src={optimizarImagen(productoDestacado.imagen || productoDestacado.imagenes?.[0], 400)} 
                 alt={productoDestacado.nombre} 
                 className="imagen-destacado-home"
               />
+          */}
+
+          <img 
+            src={optimizarImagen(productoDestacado.imagen || productoDestacado.imagenes?.[0], 800)} 
+            alt={productoDestacado.nombre} 
+            className="imagen-destacado-home"
+            loading="eager" // Como es la primera imagen visible de la página, carga de inmediato
+          />
+
+
+
               <h3 className="titulo-producto-destacado">{productoDestacado.nombre}</h3>
 
               <h2 className="titulo-especificaciones">Descripcion</h2>
