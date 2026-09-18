@@ -89,36 +89,34 @@ export default function Inicio() {
         };
 
         return (
+
           <section className="seccion-destacado-home">
             <h2 className="titulo-banner-destacado">
               🔥 ¡PRODUCTO DE LA SEMANA - 15% OFF! 🔥
             </h2>
-            <div className="tarjeta-destacado-home">
-              
-              {/* 👉 BADGE VISUAL DE DESCUENTO */}
-              <div className="badge-descuento-home">
-                🔥 15% OFF
-              </div>
 
-           {/*    <img 
-                src={optimizarImagen(productoDestacado.imagen || productoDestacado.imagenes?.[0], 400)} 
-                alt={productoDestacado.nombre} 
-                className="imagen-destacado-home"
+           <div className="tarjeta-destacado-home">
+            
+            {/* 👉 BADGE VISUAL DE DESCUENTO */}
+            <div className="badge-descuento-home">
+              🔥 15% OFF
+            </div>
+
+            {/* CONTENEDOR CON TAMAÑO FIJO PARA EVITAR SALTOS DE DISEÑO (CLS) */}
+            <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                <img 
+                  src={optimizarImagen(productoDestacado.imagen || productoDestacado.imagenes?.[0], 400)} 
+                  alt={productoDestacado.nombre} 
+                  className="imagen-destacado-home"
+                  width="400"
+                  height="300"
+                  loading="eager" // Como es la primera imagen visible de la página, carga de inmediato
               />
-          */}
+            </div>
 
-          <img 
-            src={optimizarImagen(productoDestacado.imagen || productoDestacado.imagenes?.[0], 400)} 
-            alt={productoDestacado.nombre} 
-            className="imagen-destacado-home"
-            loading="eager" // Como es la primera imagen visible de la página, carga de inmediato
-          />
+            <h3 className="titulo-producto-destacado">{productoDestacado.nombre}</h3>
 
-
-
-              <h3 className="titulo-producto-destacado">{productoDestacado.nombre}</h3>
-
-              <h2 className="titulo-especificaciones">Descripcion</h2>
+            <h2 className="titulo-especificaciones">Descripcion</h2>
               
               {/* DESCRIPCIÓN SEPARADA POR PUNTOS */}
               <div className="descripcion-producto-destacado">
@@ -160,6 +158,7 @@ export default function Inicio() {
 
             </div>
           </section>
+
         );
       })()}
 
