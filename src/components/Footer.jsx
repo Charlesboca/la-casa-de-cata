@@ -10,6 +10,7 @@ export default function Footer() {
 
   return (
     <footer className="footer-container">
+      
       <div className="footer-grid">
         
         {/* Columna: Logo que navega al inicio y hace scroll */}

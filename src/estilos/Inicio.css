@@ -33,6 +33,7 @@
   padding: 60px 20px;
   background-color: #f9f9f9;
   text-align: center;
+  min-height: 280px; /* Ajusta este valor según lo que ocupen tus tarjetas de servicios en celular */
 }
 
 /* --- CINTILLO / TÍTULO DESTACADO LLAMATIVO --- */

@@ -72,6 +72,11 @@
   .footer-scroll-top {
     justify-content: center;
   }
+
+  .footer-container {
+    min-height: 250px; /* Reserva el espacio vertical del footer en pantallas chicas */
+  }
+
 }
 
 .enlace-mapa {
