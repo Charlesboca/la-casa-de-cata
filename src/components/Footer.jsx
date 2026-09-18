@@ -19,6 +19,8 @@ export default function Footer() {
               src={logoFooter} 
               alt="Logo La Casa de Cata" 
               className="footer-logo"
+              width="120" 
+              height="120"
             />
           </Link>
         </div>
