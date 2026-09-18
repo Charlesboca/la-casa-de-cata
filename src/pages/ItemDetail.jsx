@@ -98,9 +98,9 @@ export default function ItemDetail() {
     let texto = "";
 
     if (esDestacado) {
-      texto = `¡Hola! Me interesa la oferta de la semana en La Casa de Cata: *${producto.nombre}* a *$${precioFinal.toLocaleString('es-AR')}* (Antes *$${precioOriginal.toLocaleString('es-AR')}* - ¡15% OFF!). Lo vi acá: ${window.location.href}`;
+      texto = `¡Hola! Mirá la oferta de la semana en La Casa de Cata: *${producto.nombre}* a *$${precioFinal.toLocaleString('es-AR')}* (Antes *$${precioOriginal.toLocaleString('es-AR')}* - ¡15% OFF!). Lo vi acá: ${window.location.href}`;
     } else {
-      texto = `¡Hola! Me interesa este producto de La Casa de Cata: *${producto.nombre}* a *$${precioOriginal.toLocaleString('es-AR')}*. Lo vi acá: ${window.location.href}`;
+      texto = `¡Hola! Mirá este producto de La Casa de Cata: *${producto.nombre}* a *$${precioOriginal.toLocaleString('es-AR')}*. Lo vi acá: ${window.location.href}`;
     }
 
     const urlWhatsApp = `https://api.whatsapp.com/send?text=${encodeURIComponent(texto)}`;
