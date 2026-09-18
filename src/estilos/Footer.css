@@ -20,8 +20,9 @@
 }
 
 .footer-logo {
-  height: 50px;       /* Achicado de 70px a 50px */
-  width: auto;
+  width: 50px;        /* Tamaño visual en la pantalla */
+  height: 50px;       /* Mantiene la proporción cuadrada */
+  object-fit: contain;
   cursor: pointer;
   transition: transform 0.3s ease;
 }
