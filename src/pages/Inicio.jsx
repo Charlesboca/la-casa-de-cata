@@ -111,6 +111,7 @@ export default function Inicio() {
                   width="400"
                   height="300"
                   loading="eager" // Como es la primera imagen visible de la página, carga de inmediato
+                  fetchPriority="high"
               />
             </div>
 
