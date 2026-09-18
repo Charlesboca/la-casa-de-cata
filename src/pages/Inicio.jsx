@@ -108,7 +108,7 @@ export default function Inicio() {
           */}
 
           <img 
-            src={optimizarImagen(productoDestacado.imagen || productoDestacado.imagenes?.[0], 800)} 
+            src={optimizarImagen(productoDestacado.imagen || productoDestacado.imagenes?.[0], 400)} 
             alt={productoDestacado.nombre} 
             className="imagen-destacado-home"
             loading="eager" // Como es la primera imagen visible de la página, carga de inmediato
