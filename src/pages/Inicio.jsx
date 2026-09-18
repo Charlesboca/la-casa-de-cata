@@ -92,7 +92,7 @@ export default function Inicio() {
 
             const handleCompartirWhatsApp = () => {
               const urlProducto = `${window.location.origin}/producto/${productoDestacado.id}`;
-              const texto = `¡Hola! Mira la oferta de la semana en La Casa de Cata: *${productoDestacado.nombre}* a *$${precioConDescuento.toLocaleString('es-AR')}* (Antes *$${precioOriginal.toLocaleString('es-AR')}* - ¡15% OFF!). Lo vi acá: ${urlProducto}`;
+              const texto = `¡Hola! Mirá la oferta de la semana en La Casa de Cata: *${productoDestacado.nombre}* a *$${precioConDescuento.toLocaleString('es-AR')}* (Antes *$${precioOriginal.toLocaleString('es-AR')}* - ¡15% OFF!). Lo vi acá: ${urlProducto}`;
               const urlWhatsApp = `https://api.whatsapp.com/send?text=${encodeURIComponent(texto)}`;
               window.open(urlWhatsApp, '_blank');
             };
