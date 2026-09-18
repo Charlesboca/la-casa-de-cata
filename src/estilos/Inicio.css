@@ -275,3 +275,51 @@
   background-color: #20ba5a;
   transform: translateY(-2px);
 }
+
+/* --- MEDIA QUERY GENERAL PARA CELULARES (Evita CLS y desbordes) --- */
+@media (max-width: 768px) {
+  .banner {
+    padding: 30px 15px;
+    min-height: 220px; /* Reserva espacio para que el banner no salte */
+  }
+
+  .banner h1 {
+    font-size: 2rem; /* Achicado de 3rem para celulares */
+    margin-bottom: 12px;
+  }
+
+  .banner p {
+    font-size: 1rem;
+  }
+
+  .servicios-container {
+    padding: 30px 15px;
+    min-height: 320px; /* Reserva el espacio exacto de la sección de servicios */
+  }
+
+  .titulo-banner-destacado {
+    font-size: 1.2rem;
+    padding: 12px 15px;
+    margin-bottom: 25px;
+  }
+
+  .seccion-destacado-home {
+    padding: 30px 15px;
+  }
+
+  .tarjeta-destacado-home {
+    padding: 20px;
+  }
+
+  .titulo-producto-destacado {
+    font-size: 1.4rem;
+  }
+
+  .grid-servicios {
+    gap: 15px;
+  }
+
+  .tarjeta-servicio {
+    padding: 20px;
+  }
+}
