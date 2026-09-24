@@ -1,0 +1,178 @@
+/* --- FONDO OSCURO FLOTANTE (BACKDROP) --- */
+.buscador-overlay-backdrop {
+  position: fixed;
+  top: 80px; /* Se posiciona justo debajo del Header */
+  left: 0;
+  width: 100vw;
+  height: calc(100vh - 80px);
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 40;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  box-sizing: border-box;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* --- PANEL FLOTANTE DE RESULTADOS --- */
+.buscador-overlay-panel {
+  background: #ffffff;
+  width: 100%;
+  max-width: 900px;
+  max-height: 80vh;
+  border-radius: 12px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.buscador-panel-header {
+  background: #1f2937;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buscador-panel-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.btn-cerrar-overlay {
+  background: #e63946;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.85rem;
+  transition: background 0.2s;
+}
+
+.btn-cerrar-overlay:hover {
+  background: #d62828;
+}
+
+/* --- GRILLA INTERNA DEL PANEL --- */
+.buscador-panel-grid {
+  padding: 20px;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 15px;
+  max-height: calc(80vh - 60px);
+}
+
+.tarjeta-resultado-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.tarjeta-resultado {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  padding: 10px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.tarjeta-resultado:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-color: #e63946;
+}
+
+.resultado-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.resultado-info h4 {
+  margin: 0 0 4px 0;
+  font-size: 0.95rem;
+  color: #1f2937;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.resultado-cat {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #ffffff;              /* Texto blanco */
+  background-color: #374151;   /* Fondo gris oscuro sólido */
+  padding: 3px 8px;
+  border-radius: 6px;
+  text-transform: capitalize;
+  margin-bottom: 6px;
+}
+
+.sin-resultados-global {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #4b5563;
+  padding: 40px;
+  font-size: 1rem;
+}
+
+/* Responsive para celulares y pantallas chicas */
+@media (max-width: 768px) {
+  .buscador-overlay-backdrop {
+    top: 65px; /* Se acopla exactamente debajo del header en mobile */
+    height: calc(100vh - 65px);
+    padding: 8px;
+    align-items: flex-start;
+  }
+
+  .buscador-overlay-panel {
+    max-height: 85vh; /* Ocupa un buen alto sin salirse de la pantalla */
+    border-radius: 8px;
+    width: 100%;
+  }
+
+  .buscador-panel-header {
+    padding: 12px 15px;
+  }
+
+  .buscador-panel-header h3 {
+    font-size: 0.95rem; /* Letra un poco más chica para que entre bien el texto de búsqueda */
+  }
+
+  .buscador-panel-grid {
+    padding: 12px;
+    grid-template-columns: 1fr; /* Una sola columna de tarjetas para que se lean cómodamente */
+    gap: 10px;
+  }
+
+  .tarjeta-resultado {
+    padding: 8px;
+  }
+
+  .resultado-img {
+    width: 50px; /* Imagen un poquito más compacta en celu */
+    height: 50px;
+  }
+
+  .resultado-info h4 {
+    font-size: 0.85rem;
+  }
+}

@@ -101,3 +101,172 @@
     max-height: 50px; 
   }
 }
+
+/* Sección derecha (Buscador + Menú) */
+.header-right-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  z-index: 60;
+}
+
+/* --- CONTENEDOR DEL BUSCADOR EN EL HEADER --- */
+.contenedor-buscador-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-buscador-header {
+  background-color: #374151;
+  border: 1px solid #4b5563;
+  color: white;
+  padding: 8px 32px 8px 14px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  width: 180px;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.input-buscador-header::placeholder {
+  color: #9ca3af;
+}
+
+.input-buscador-header:focus {
+  width: 240px;
+  border-color: #e63946;
+  background-color: #111827;
+  box-shadow: 0 0 0 2px rgba(230, 57, 70, 0.2);
+}
+
+.btn-limpiar-busqueda {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-limpiar-busqueda:hover {
+  color: white;
+}
+
+/* Media query para celulares */
+@media (max-width: 768px) {
+  .input-buscador-header {
+    width: 110px;
+    font-size: 0.8rem;
+    padding: 6px 26px 6px 10px;
+  }
+
+  .input-buscador-header:focus {
+    width: 150px;
+  }
+
+  .header-right-section {
+    gap: 10px;
+  }
+}
+/* --- ESTILO TIPO FRÁVEGA (Estructura en 3 columnas fluidas) --- */
+.header-wrapper.header-fravega-layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 0 24px;
+}
+
+/* Sección Izquierda unificada */
+.header-fravega-layout .header-left-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* Reemplazamos el contenedor absoluto del logo por uno normal en línea */
+.logo-container-fravega {
+  position: static;
+  transform: none;
+  display: flex;
+  align-items: center;
+  height: auto;
+}
+
+.logo-container-fravega img {
+  max-height: 50px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Sección Central (El buscador se expande ocupando el espacio) */
+.header-fravega-layout .header-center-section {
+  flex-grow: 1;
+  max-width: 650px;
+  display: flex;
+  justify-content: center;
+}
+
+.header-fravega-layout .contenedor-buscador-header {
+  width: 100%;
+}
+
+/* Hacemos que el input ocupe todo el ancho de su contenedor central */
+.header-fravega-layout .input-buscador-header {
+  width: 100% !important;
+  max-width: 100%;
+  background-color: #374151;
+  border-radius: 8px; /* Bordes un poco más rectos estilo tienda grande */
+  padding: 10px 40px 10px 16px;
+  font-size: 0.95rem;
+}
+
+.header-fravega-layout .input-buscador-header:focus {
+  width: 100% !important;
+  background-color: #111827;
+}
+
+/* Posicionamos la lupa decorativa a la derecha del input ancho */
+.header-fravega-layout .contenedor-buscador-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.icono-lupa-fravega {
+  position: absolute;
+  right: 15px;
+  color: #9ca3af;
+  pointer-events: none;
+  font-size: 0.9rem;
+}
+
+.header-fravega-layout .btn-limpiar-busqueda {
+  right: 38px;
+}
+
+/* Ajuste responsive para celulares */
+@media (max-width: 768px) {
+  .header-wrapper.header-fravega-layout {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 12px 15px;
+    gap: 10px;
+  }
+
+  .header-fravega-layout .header-center-section {
+    order: 3;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .logo-container-fravega img {
+    max-height: 40px;
+  }
+}

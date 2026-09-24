@@ -1,35 +1,30 @@
-import { useEffect, useState, useContext } from 'react'; // 1. Añadimos useContext
+import { useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
-// ❌ Borramos los imports de Firebase porque ya no se consultan acá
 import SkeletonProducto from '../components/SkeletonProducto.jsx';
 import '../estilos/ProductosPorCategoria.css';
-import { ProductosContext } from '../context/ProductosContext'; // 2. Importamos el Contexto global
+import { ProductosContext } from '../context/ProductosContext';
 
 export default function ProductosPorCategoria() {
   // Capturamos la categoría actual desde la URL (ej: "bazar")
   const { catName } = useParams();
 
-  // 3. Nos conectamos al Contexto global para extraer el catálogo completo y el estado de carga
-  const { productos: productosGlobales, cargando } = useContext(ProductosContext);
+  // 1. Nos conectamos al Contexto global para traer los productos, el estado de carga y el buscador global
+  const { productos: productosGlobales, cargando, terminoBusqueda, setTerminoBusqueda } = useContext(ProductosContext);
 
-  // Estado local exclusivo para la barra de búsqueda interna
-  const [busqueda, setBusqueda] = useState(''); 
-
-  // Efecto solo para scrollear arriba de todo al cambiar de categoría (ya no busca en Firebase)
+  // Efecto para scrollear arriba de todo y limpiar el buscador global al cambiar de categoría
   useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     });
-    setBusqueda(''); // Limpiamos la búsqueda al cambiar de categoría
-  }, [catName]);
+    setTerminoBusqueda(''); // Limpiamos la búsqueda global al cambiar de categoría
+  }, [catName, setTerminoBusqueda]);
 
-  // 4. FILTRADO EN MEMORIA (Paso clave):
-  // Primero filtramos los productos globales que coincidan con la categoría de la URL (catName).
-  // Después, sobre esos mismos, filtramos los que coincidan con lo que el usuario tipea en el buscador.
+  // 2. FILTRADO GLOBAL: 
+  // Filtramos los productos por la categoría de la URL y por lo que el usuario escribe en el Header.
   const productosFiltrados = productosGlobales.filter(prod => {
     const coincideCategoria = prod.categoria === catName;
-    const coincideBusqueda = prod.nombre.toLowerCase().includes(busqueda.toLowerCase());
+    const coincideBusqueda = prod.nombre.toLowerCase().includes(terminoBusqueda.toLowerCase());
     return coincideCategoria && coincideBusqueda;
   });
 
@@ -45,20 +40,9 @@ export default function ProductosPorCategoria() {
          {catName}
       </h2>
 
-      {/* 🔍 Input de búsqueda (se muestra cuando termina de cargar el Provider) */}
-      {!cargando && productosGlobales.length > 0 && (
-        <div className="contenedor-buscador">
-          <input 
-            type="text" 
-            placeholder={`Buscar en ${catName}...`} 
-            value={busqueda}
-            onChange={(e) => setBusqueda(e.target.value)}
-            className="input-buscador"
-          />
-        </div>
-      )}
+      {/* ❌ El input local ya se quitó de acá porque ahora el buscador es único y vive en el Header */}
 
-      {/* 5. Usamos el estado de carga 'cargando' que viene directamente del Contexto */}
+      {/* 3. Usamos el estado de carga 'cargando' del Contexto */}
       {cargando ? (
         <div className="grid-productos">
             <SkeletonProducto />

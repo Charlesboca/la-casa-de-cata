@@ -5,6 +5,7 @@ import Layout from './components/Layout.jsx';
 import PanelAdministracion from './components/PanelAdministracion';
 import PageNotFound from './components/PageNotFound';
 
+
 // 1. Convertimos tus importaciones normales en carga perezosa (lazy)
 const Inicio = lazy(() => import('./pages/Inicio.jsx'));
 const Categoria = lazy(() => import('./pages/Categoria.jsx'));
