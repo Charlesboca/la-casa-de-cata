@@ -8,6 +8,8 @@ export default function Navbar({ isOpen, closeMenu }) {
       <Link to="/" onClick={closeMenu}>Inicio</Link>
       <Link to="/productos" onClick={closeMenu}>Productos</Link>
 {/*       <Link to="/carrito" onClick={closeMenu}>Carrito</Link>
- */}    </nav>
+ */}    
+      <Link to="/madre-bazar-cata" onClick={closeMenu}>Dia de la madre</Link>
+ </nav>
   );
 }

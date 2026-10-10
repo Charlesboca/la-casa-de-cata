@@ -11,6 +11,9 @@ export default function FormularioProducto({ productoAEditar, onProductoGuardado
   
   // 👉 Estado para el producto destacado
   const [destacado, setDestacado] = useState(false);
+
+  // 👉 Estado para el campo madre
+  const [madre, setMadre] = useState(false);
   
   // Soporte para múltiples archivos e imágenes existentes
   const [imagenesFiles, setImagenesFiles] = useState([]);
@@ -54,10 +57,12 @@ export default function FormularioProducto({ productoAEditar, onProductoGuardado
       setDescripcion(productoAEditar.descripcion || '');
       setPrecio(productoAEditar.precio || '');
       setCategoria(productoAEditar.categoria || '');
-      // 👉 Seteamos el estado de destacado si existe, sino false por defecto
-      setDestacado(Boolean(productoAEditar.destacado));
       
-      // Manejamos si el producto viejo tiene un array de imágenes o una sola foto suelta ("imagen")
+      // Seteamos destacado y madre
+      setDestacado(Boolean(productoAEditar.destacado));
+      setMadre(Boolean(productoAEditar.madre));
+      
+      // Manejamos las imágenes
       if (productoAEditar.imagenes && Array.isArray(productoAEditar.imagenes)) {
         setImagenesExistentes(productoAEditar.imagenes);
       } else if (productoAEditar.imagen) {
@@ -74,7 +79,8 @@ export default function FormularioProducto({ productoAEditar, onProductoGuardado
     setNombre('');
     setDescripcion('');
     setPrecio('');
-    setDestacado(false); // 👉 Limpiamos el checkbox
+    setDestacado(false);
+    setMadre(false); // 👉 Limpiamos el checkbox madre
     setImagenesFiles([]);
     setImagenesExistentes([]);
     if (inputFileRef.current) {
@@ -89,7 +95,7 @@ export default function FormularioProducto({ productoAEditar, onProductoGuardado
     for (let file of imagenesFiles) {
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("upload_preset", "rowasound_upload"); // Tu preset actual
+      formData.append("upload_preset", "rowasound_upload");
       
       try {
         const res = await fetch("https://api.cloudinary.com/v1_1/djl3xx2lo/image/upload", { 
@@ -120,15 +126,13 @@ export default function FormularioProducto({ productoAEditar, onProductoGuardado
     setMensaje({ texto: '', tipo: '' });
 
     try {
-      // 👉 EXCLUSIVIDAD: Si este producto se marca como destacado, 
-      // buscamos y desactivamos cualquier otro que estuviera destacado antes.
+      // Exclusividad para Destacados
       if (destacado) {
         const q = query(collection(db, "productos"), where("destacado", "==", true));
         const querySnapshot = await getDocs(q);
         const batch = writeBatch(db);
         
         querySnapshot.forEach((docSnap) => {
-          // Si estamos editando, evitamos apagar el producto actual
           if (!esEdicion || docSnap.id !== productoAEditar.id) {
             batch.update(docSnap.ref, { destacado: false });
           }
@@ -136,13 +140,11 @@ export default function FormularioProducto({ productoAEditar, onProductoGuardado
         await batch.commit();
       }
 
-      // 1. Subimos las nuevas fotos seleccionadas
+      // 1. Subimos las nuevas fotos
       const nuevasUrls = await subirImagenesACloudinary();
 
-      // 2. Combinamos las imágenes que ya tenía con las nuevas
+      // 2. Combinamos imágenes existentes y nuevas
       const todasLasImagenes = [...imagenesExistentes, ...nuevasUrls];
-      
-      // Si no hay ninguna imagen, dejamos un placeholder por defecto
       const galeriaFinal = todasLasImagenes.length > 0 ? todasLasImagenes : ['https://via.placeholder.com/150'];
 
       if (esEdicion) {
@@ -153,7 +155,8 @@ export default function FormularioProducto({ productoAEditar, onProductoGuardado
           descripcion: descripcion.trim(),
           precio: Number(precio),
           categoria: categoria.toLowerCase().trim(),
-          destacado: destacado, // 👉 Guardamos el booleano exclusivo
+          destacado: destacado,
+          madre: madre, // 👉 Guardamos el booleano madre
           imagenes: galeriaFinal,
           imagen: galeriaFinal[0] 
         });
@@ -166,7 +169,8 @@ export default function FormularioProducto({ productoAEditar, onProductoGuardado
           descripcion: descripcion.trim(),
           precio: Number(precio),
           categoria: categoria.toLowerCase().trim(),
-          destacado: destacado, // 👉 Guardamos el booleano exclusivo
+          destacado: destacado,
+          madre: madre, // 👉 Guardamos el booleano madre
           imagenes: galeriaFinal,
           imagen: galeriaFinal[0],
           createdAt: new Date()
@@ -290,6 +294,20 @@ export default function FormularioProducto({ productoAEditar, onProductoGuardado
             />
             <label htmlFor="destacadoCheck" style={{ cursor: 'pointer', color: '#fff', fontWeight: 'bold' }}>
               ⭐ Marcar como Producto Destacado (Reemplazará al anterior en el Home)
+            </label>
+          </div>
+
+          {/* 👉 CHECKBOX DE CAMPO MADRE */}
+          <div className="formulario-grupo" style={{ flexDirection: 'row', alignItems: 'center', gap: '10px', marginTop: '10px' }}>
+            <input 
+              type="checkbox" 
+              id="madreCheck"
+              checked={madre} 
+              onChange={(e) => setMadre(e.target.checked)}
+              style={{ width: '20px', height: '20px', cursor: 'pointer' }}
+            />
+            <label htmlFor="madreCheck" style={{ cursor: 'pointer', color: '#fff', fontWeight: 'bold' }}>
+              🏷️ Marcar como Producto Madre
             </label>
           </div>
 

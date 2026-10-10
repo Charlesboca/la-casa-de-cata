@@ -4,6 +4,7 @@ import { ProductosProvider } from './context/ProductosContext'; // 👈 1. Impor
 import Layout from './components/Layout.jsx';
 import PanelAdministracion from './components/PanelAdministracion';
 import PageNotFound from './components/PageNotFound';
+import MadreBazarCata from "./pages/MadreBazarCata"; // o la ruta donde lo hayas guardado
 
 
 // 1. Convertimos tus importaciones normales en carga perezosa (lazy)
@@ -33,6 +34,7 @@ function App() {
               <Route path="/producto/:id" element={<ItemDetail />} />
               <Route path="/panel-producto" element={<FormularioProducto />} />
               <Route path="/Bover" element={<PanelAdministracion />} />
+              <Route path="/madre-bazar-cata" element={<MadreBazarCata />} />
               <Route path="*" element={<PageNotFound />} />
             </Routes>
           </Suspense>
