@@ -1,0 +1,145 @@
+/* ================================================= */
+/* ESTILOS EXCLUSIVOS - LA CASA DE CATA (DÍA DE LA MADRE) */
+/* ================================================= */
+
+section {
+  width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  background-color: #fff9fb; /* Fondo muy suave rosado/pastel */
+  min-height: 80vh;
+}
+
+/* Banner superior temático */
+.banner-madre-cata {
+  text-align: center;
+  margin: 0 auto 30px auto;
+  background: linear-gradient(135deg, #8e44ad 0%, #d81b60 100%);
+  padding: 35px 20px;
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 4px 15px rgba(216, 27, 96, 0.2);
+}
+
+.banner-madre-cata h1 {
+  color: #fff;
+  font-size: 2.2rem;
+  margin: 0 0 10px 0;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.banner-madre-cata p {
+  color: #fce4ec;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.grid-productos-madre {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 25px;
+  padding: 10px 20px 40px 20px; 
+  max-width: 1000px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.tarjeta-producto-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.tarjeta-producto-madre {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(216, 27, 96, 0.08);
+  border: 1px solid #f8bbd0; /* Bordecito sutil tono rosa */
+  transition: all 0.3s ease;
+}
+
+.tarjeta-producto-madre:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(216, 27, 96, 0.18);
+  border-color: #d81b60;
+}
+
+.producto-img-madre {
+  width: 100%;      
+  height: 180px;    
+  object-fit: cover;
+  display: block;
+  background-color: #fce4ec; 
+}
+
+.tarjeta-producto-info-madre {
+  padding: 18px;
+}
+
+.tarjeta-producto-info-madre h3 {
+  margin: 0 0 10px;
+  font-size: 1.15rem;
+  color: #4a154b;
+}
+
+.precio-madre {
+  color: #d81b60;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.contenedor-volver-madre {
+  width: 100%;
+  max-width: 1000px;
+  margin: 25px auto 15px auto; /* Margen superior para separarlo y centrado automático con auto */
+  padding: 0 15px; 
+  display: flex;
+  justify-content: center; /* 👉 Esto es lo que centra el botón horizontalmente */
+  box-sizing: border-box; 
+}
+
+.btn-volver-madre {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  background-color: #d81b60; 
+  color: white;             
+  padding: 8px 18px;
+  border-radius: 8px;        
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.btn-volver-madre:hover {
+  background-color: #ad1457; 
+  transform: translateY(-2px); 
+}
+
+.sin-productos-madre {
+  text-align: center;
+  grid-column: 1 / -1;
+  padding: 40px;
+  color: #880e4f;
+  font-size: 1.1rem;
+}
+
+/* 📱 Media Query para Celulares */
+@media (max-width: 576px) {
+  .grid-productos-madre {
+    grid-template-columns: 1fr; /* Una sola columna en celu */
+    padding: 10px 15px;
+  }
+
+  .banner-madre-cata h1 {
+    font-size: 1.6rem; 
+  }
+
+  .banner-madre-cata p {
+    font-size: 0.95rem;
+  }
+
+  .producto-img-madre {
+    height: 200px; 
+  }
+}

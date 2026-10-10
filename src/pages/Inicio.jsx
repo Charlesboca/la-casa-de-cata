@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { db } from '../firebase/firebaseConfig.js';
 import { collection, query, where, getDocs, limit } from 'firebase/firestore';
 import { MessageCircle } from 'lucide-react';
-import { ProductosContext } from '../context/ProductosContext'; // 1. Importamos el Contexto global
+import { ProductosContext } from '../context/ProductosContext';
 
 // 🚀 IMPORTAMOS NUESTRO HELPER REUTILIZABLE
 import { optimizarImagen } from '../helpers/cloudinary';
@@ -12,22 +12,20 @@ import '../estilos/Inicio.css';
 import '../estilos/Horarios.css'; 
 
 export default function Inicio() {
-  
-  // ==========================================
-  // CONFIGURACIÓN DE COLECCIÓN ACTIVA
-  // ==========================================
-  const COLECCION_ACTIVA = "productos"; // Podés cambiar a "productos_test" si lo usás para pruebas
+  const COLECCION_ACTIVA = "productos";
 
-  // 2. Nos conectamos al Contexto global para aprovechar los productos ya descargados
+  // 2. Nos conectamos al Contexto global
   const { productos: productosGlobales } = useContext(ProductosContext);
 
-  // 3. BÚSQUEDA HÍBRIDA EN MEMORIA: Buscamos si ya hay un destacado en el Contexto
+  // 3. BÚSQUEDA HÍBRIDA EN MEMORIA: Buscamos si ya hay un destacado
   const productoEnMemoria = productosGlobales.find(p => p.destacado === true);
 
   const [productoDestacado, setProductoDestacado] = useState(productoEnMemoria || null);
   const [cargandoDestacado, setCargandoDestacado] = useState(!productoEnMemoria && productosGlobales.length === 0);
 
-  // Sincronizar por si el Contexto termina de cargar un poquito después
+  // Filtramos los productos de la categoría/campo madre para el apartado especial
+  const productosMadre = productosGlobales.filter(p => p.madre === true);
+
   useEffect(() => {
     if (productoEnMemoria) {
       setProductoDestacado(productoEnMemoria);
@@ -35,7 +33,6 @@ export default function Inicio() {
       return;
     }
 
-    // PLAN DE EMERGENCIA: Si el contexto global está vacío, consultamos a Firebase directamente
     const fetchDestacado = async () => {
       try {
         setCargandoDestacado(true);
@@ -73,14 +70,42 @@ export default function Inicio() {
         <p>Todo lo que tu hogar necesita, con la calidad y confianza de siempre.</p>
       </section>
 
+      {/* 🌸 APARTADO ESPECIAL DÍA DE LA MADRE / BAZAR */}
+      {productosMadre.length > 0 && (
+      <section 
+        className="seccion-madre-home"
+        style={{ height: 'auto', minHeight: 'unset', alignSelf: 'center' }}
+      >
+            <h2 className="titulo-banner-destacado" style={{ color: '#ff6b81' }}>
+            💐 ESPECIAL DÍA DE LA MADRE - REGALOS ÚNICOS 💐
+          </h2>
+          <p style={{ color: '#ccc' }}>
+            Descubrí nuestra selección especial.
+          </p>
+          
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', flexWrap: 'wrap' }}>
+            <Link 
+              to="/madre-bazar-cata" 
+              className="btn-ver-tienda-destacado"
+              style={{ background: '#ff4757', color: '#fff', padding: '10px 20px', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold', fontSize: '0.95rem' }}
+            >
+              Ver sección completa del especial Día de la Madre →
+            </Link>
+          </div>
+        </section>
+      )}
+
+
+{/* SECCIÓN DESTACADO DE LA SEMANA (Solo se muestra cuando NO hay campaña del Día de la Madre) */}
       {/* SECCIÓN DESTACADO DE LA SEMANA */}
+
+{productosMadre.length === 0 && (
       <section className="seccion-destacado-home">
         <h2 className="titulo-banner-destacado">
           🔥 ¡PRODUCTO DE LA SEMANA - 15% OFF! 🔥
         </h2>
 
         {cargandoDestacado || !productoDestacado ? (
-          /* SKELETON / CONTENEDOR DE CARGA FIJO PARA EVITAR SALTOS */
           <div className="tarjeta-destacado-home" style={{ minHeight: '420px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <p style={{ color: '#888' }}>Cargando oferta de la semana...</p>
           </div>
@@ -92,7 +117,7 @@ export default function Inicio() {
 
             const handleCompartirWhatsApp = () => {
               const urlProducto = `${window.location.origin}/producto/${productoDestacado.id}`;
-              const texto = `¡Hola! Mirá la oferta de la semana en La Casa de Cata: *${productoDestacado.nombre}* a *$${precioConDescuento.toLocaleString('es-AR')}* (Antes *$${precioOriginal.toLocaleString('es-AR')}* - ¡15% OFF!). Lo vi acá: ${urlProducto}`;
+              const texto = `¡Hola! Mirá la oferta de la semana en La Casa de Cata: *${productoDestacado.nombre}* a *$${precioConDescuento.toLocaleString('es-AR')}* (Antes *$${precioOriginal.toLocaleString('es-AR')}* ¡15% OFF!). Lo vi acá: ${urlProducto}`;
               const urlWhatsApp = `https://api.whatsapp.com/send?text=${encodeURIComponent(texto)}`;
               window.open(urlWhatsApp, '_blank');
             };
@@ -158,6 +183,8 @@ export default function Inicio() {
         )}
       </section>
 
+)}
+
       <section className="servicios-container">
         <h2 className="titulo-seccion">Nuestros Servicios</h2>
         <div className="grid-servicios">
@@ -173,7 +200,6 @@ export default function Inicio() {
             <p>Tramitamos tus antecedentes, constancias de CUIL, ANSES y más trámites online.</p>
           </div>
 
-          {/* Tarjeta de Acceso a Productos */}
           <Link to="/productos" className="tarjeta-servicio tarjeta-especial">
             <span className="icono">🛍️</span>
             <h3>Ver Productos</h3>
@@ -183,7 +209,7 @@ export default function Inicio() {
         </div>
       </section>
 
-      {/* Nueva Sección de Horarios */}
+      {/* Sección de Horarios */}
       <section className="seccion-horarios">
         <h2 className="horarios-titulo">Horarios de Atención</h2>
         <div className="horarios-grid">

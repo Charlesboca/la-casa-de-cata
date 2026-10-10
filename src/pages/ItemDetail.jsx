@@ -80,9 +80,16 @@ export default function ItemDetail() {
     );
   }
 
-  const rutaVolver = producto.categoria 
-    ? `/productos/${producto.categoria.toLowerCase()}` 
-    : '/productos';
+  // 🌸 DETECTAMOS SI VINO DE LA SECCIÓN DE MAMÁ O DE CATEGORÍA NORMAL
+  const vieneDeMadre = location.state?.origen === 'madre';
+
+  const rutaVolver = vieneDeMadre 
+    ? '/madre-bazar-cata' /* Asegurate de usar la ruta exacta que pusiste en tu Router para la vista de mamá */
+    : (producto.categoria ? `/productos/${producto.categoria.toLowerCase()}` : '/productos');
+
+  const textoVolver = vieneDeMadre 
+    ? 'Volver a Especial Día de la Madre' 
+    : `Volver a ${producto.categoria || 'productos'}`;
 
   const esDestacado = Boolean(producto.destacado);
   const precioOriginal = Number(producto.precio || 0);
@@ -98,7 +105,7 @@ export default function ItemDetail() {
     let texto = "";
 
     if (esDestacado) {
-      texto = `¡Hola! Mirá la oferta de la semana en La Casa de Cata: *${producto.nombre}* a *$${precioFinal.toLocaleString('es-AR')}* (Antes *$${precioOriginal.toLocaleString('es-AR')}* - ¡15% OFF!). Lo vi acá: ${window.location.href}`;
+      texto = `¡Hola! Mirá la oferta de la semana en La Casa de Cata: *${producto.nombre}* a *$${precioFinal.toLocaleString('es-AR')}* (Antes *$${precioOriginal.toLocaleString('es-AR')}* ¡15% OFF!). Lo vi acá: ${window.location.href}`;
     } else {
       texto = `¡Hola! Mirá este producto de La Casa de Cata: *${producto.nombre}* a *$${precioOriginal.toLocaleString('es-AR')}*. Lo vi acá: ${window.location.href}`;
     }
@@ -112,7 +119,7 @@ export default function ItemDetail() {
 
       <div className="volver-container">
         <Link to={rutaVolver} className="btn-volver-categoria">
-          ← Volver a {producto.categoria || 'productos'}
+          ← {textoVolver}
         </Link>
       </div>
 
@@ -134,7 +141,7 @@ export default function ItemDetail() {
                 <img
                   key={index}
                   src={img.includes('cloudinary.com') ? img.replace('/upload/', '/upload/w_100,c_scale,f_auto,q_auto/') : img}
-                  alt={`${producto.nombre} - miniatura ${index + 1}`}
+                  alt={`${producto.nombre} miniatura ${index + 1}`}
                   onClick={() => setImagenActiva(img)}
                   className={imagenActiva === img ? 'miniatura-img activa' : 'miniatura-img'}
                 />
