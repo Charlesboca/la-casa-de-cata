@@ -21,7 +21,7 @@ export default function MadreBazarCata() {
 
       {/* Banner exclusivo Día de la Madre */}
       <div className="banner-madre-cata">
-        <h1>🏠 La Casa de Cata - Especial Día de la Madre</h1>
+        <h1>🏠 Especial Día de la Madre</h1>
         <p>Regalos únicos y detalles especiales pensados para mamá.</p>
       </div>
 
