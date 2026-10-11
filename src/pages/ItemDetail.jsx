@@ -80,19 +80,24 @@ export default function ItemDetail() {
     );
   }
 
-  // 🌸 1. EL RETORNO DEPENDE EXCLUSIVAMENTE DE DÓNDE VINO EL USUARIO (state)
-  const vieneDeMadre = location.state?.origen === 'madre';
+  // 🌸 DETECCION DE NAVEGACION:
+  // 1. Si vino navegando desde la sección madre (location.state.origen === 'madre')
+  // 2. O si entró directo desde WhatsApp/Incógnito (!location.state) y el producto es de la madre (producto.madre)
+  const vinoNavegandoDesdeMadre = location.state?.origen === 'madre';
+  const esIngresoDirectoYProductoMadre = !location.state && Boolean(producto.madre);
 
-  const rutaVolver = vieneDeMadre 
+  const esProductoMadreContexto = vinoNavegandoDesdeMadre || esIngresoDirectoYProductoMadre;
+
+  const rutaVolver = esProductoMadreContexto 
     ? '/dia-madre-cata' 
     : (producto.categoria ? `/productos/${producto.categoria.toLowerCase()}` : '/productos');
 
-  const textoVolver = vieneDeMadre 
+  const textoVolver = esProductoMadreContexto 
     ? 'Volver a Especial Día de la Madre' 
     : `Volver a ${producto.categoria || 'productos'}`;
 
-  // 🌸 2. DETECCIÓN SI ES UN PRODUCTO APTO O ASOCIADO AL DÍA DE LA MADRE PARA WHATSAPP
-  const esProductoMadre = vieneDeMadre || Boolean(producto.madre);
+  // Para WhatsApp consideramos si tiene la propiedad madre o vino de la sección
+  const esProductoMadre = vinoNavegandoDesdeMadre || Boolean(producto.madre);
 
   const esDestacado = Boolean(producto.destacado);
   const precioOriginal = Number(producto.precio || 0);
