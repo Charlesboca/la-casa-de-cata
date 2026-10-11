@@ -80,16 +80,19 @@ export default function ItemDetail() {
     );
   }
 
-  // 🌸 EVALUAMOS SI VINO POR NAVEGACIÓN O SI FIREBASE INDICA QUE ES PRODUCTO MAMÁ
-  const esProductoMadre = location.state?.origen === 'madre' || Boolean(producto.madre);
+  // 🌸 1. EL RETORNO DEPENDE EXCLUSIVAMENTE DE DÓNDE VINO EL USUARIO (state)
+  const vieneDeMadre = location.state?.origen === 'madre';
 
-  const rutaVolver = esProductoMadre 
+  const rutaVolver = vieneDeMadre 
     ? '/dia-madre-cata' 
     : (producto.categoria ? `/productos/${producto.categoria.toLowerCase()}` : '/productos');
 
-  const textoVolver = esProductoMadre 
+  const textoVolver = vieneDeMadre 
     ? 'Volver a Especial Día de la Madre' 
     : `Volver a ${producto.categoria || 'productos'}`;
+
+  // 🌸 2. DETECCIÓN SI ES UN PRODUCTO APTO O ASOCIADO AL DÍA DE LA MADRE PARA WHATSAPP
+  const esProductoMadre = vieneDeMadre || Boolean(producto.madre);
 
   const esDestacado = Boolean(producto.destacado);
   const precioOriginal = Number(producto.precio || 0);
@@ -110,7 +113,7 @@ export default function ItemDetail() {
   const handleCompartirWhatsApp = () => {
     let texto = "";
 
-    // 🌸 SI EL PRODUCTO ES DEL DÍA DE LA MADRE O VIENE DE ESA SECCIÓN
+    // 🌸 SI ES UN PRODUCTO ASOCIADO AL DÍA DE LA MADRE
     if (esProductoMadre) {
       const precio = esDestacado ? precioFinal : precioOriginal;
       texto = `¡Hola! Mirá este regalo especial para el Día de la Madre en La Casa de Cata: *${producto.nombre}* a *$${precio.toLocaleString('es-AR')}*. Miraló acá: ${window.location.href} y el resto en https://lacasadecata.com.ar/dia-madre-cata`;
