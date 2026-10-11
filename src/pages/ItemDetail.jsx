@@ -84,7 +84,7 @@ export default function ItemDetail() {
   const vieneDeMadre = location.state?.origen === 'madre';
 
   const rutaVolver = vieneDeMadre 
-    ? '/dia-madre-cata' /* Asegurate de usar la ruta exacta que pusiste en tu Router para la vista de mamá */
+    ? '/dia-madre-cata' 
     : (producto.categoria ? `/productos/${producto.categoria.toLowerCase()}` : '/productos');
 
   const textoVolver = vieneDeMadre 
@@ -97,9 +97,15 @@ export default function ItemDetail() {
 
   const listaImagenes = producto.imagenes?.length > 0 ? producto.imagenes : (producto.imagen ? [producto.imagen] : []);
 
+  // 🚀 OPTIMIZACIÓN DE IMAGEN PRINCIPAL (600px max)
   const imagenParaMostrar = imagenActiva && imagenActiva.includes('cloudinary.com')
     ? imagenActiva.replace('/upload/', '/upload/w_600,c_scale,f_auto,q_auto/')
     : (imagenActiva || 'https://via.placeholder.com/300');
+
+  // 🚀 OPTIMIZACIÓN DE IMAGEN DEL MODAL (1000px max + compresión ligera)
+  const imagenParaModal = imagenActiva && imagenActiva.includes('cloudinary.com')
+    ? imagenActiva.replace('/upload/', '/upload/w_1000,c_limit,f_auto,q_auto/')
+    : imagenActiva;
 
   const handleCompartirWhatsApp = () => {
     let texto = "";
@@ -134,7 +140,7 @@ export default function ItemDetail() {
         {/* CONTENEDOR DE GALERÍA (MINIATURAS + FOTO PRINCIPAL) */}
         <div className="galeria-detalle-wrapper">
           
-          {/* LISTA DE MINIATURAS (Solo si hay más de 1 foto) */}
+          {/* LISTA DE MINIATURAS */}
           {listaImagenes.length > 1 && (
             <div className="miniaturas-container">
               {listaImagenes.map((img, index) => (
@@ -162,7 +168,7 @@ export default function ItemDetail() {
 
         {showModal && (
           <ModalImagen 
-            src={imagenActiva} 
+            src={imagenParaModal} 
             alt={producto.nombre} 
             onClose={() => setShowModal(false)} 
           />
