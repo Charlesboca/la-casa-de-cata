@@ -107,19 +107,27 @@ export default function ItemDetail() {
     ? imagenActiva.replace('/upload/', '/upload/w_1000,c_limit,f_auto,q_auto/')
     : imagenActiva;
 
-  const handleCompartirWhatsApp = () => {
+const handleCompartirWhatsApp = () => {
     let texto = "";
 
-    if (esDestacado) {
+    // 🌸 SI EL PRODUCTO ES DEL DÍA DE LA MADRE O VIENE DE ESA SECCIÓN
+    if (vieneDeMadre || producto.madre) {
+      const precio = esDestacado ? precioFinal : precioOriginal;
+      texto = `¡Hola! Mirá este regalo especial para el Día de la Madre en La Casa de Cata: *${producto.nombre}* a *$${precio.toLocaleString('es-AR')}*. Miraló acá: ${window.location.href} y el resto en https://lacasadecata.com.ar/dia-madre-cata`;
+    } 
+    // 🔥 SI ES UNA OFERTA DESTACADA NORMAL
+    else if (esDestacado) {
       texto = `¡Hola! Mirá la oferta de la semana en La Casa de Cata: *${producto.nombre}* a *$${precioFinal.toLocaleString('es-AR')}* (Antes *$${precioOriginal.toLocaleString('es-AR')}* ¡15% OFF!). Lo vi acá: ${window.location.href}`;
-    } else {
+    } 
+    // 🛍️ PRODUCTO REGULAR DEL CATÁLOGO
+    else {
       texto = `¡Hola! Mirá este producto de La Casa de Cata: *${producto.nombre}* a *$${precioOriginal.toLocaleString('es-AR')}*. Lo vi acá: ${window.location.href}`;
     }
 
     const urlWhatsApp = `https://api.whatsapp.com/send?text=${encodeURIComponent(texto)}`;
     window.open(urlWhatsApp, '_blank');
   };
-
+  
   return (
     <div className="detalle-container">
 
