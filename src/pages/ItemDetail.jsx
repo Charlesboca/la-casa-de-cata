@@ -80,14 +80,14 @@ export default function ItemDetail() {
     );
   }
 
-  // 🌸 DETECTAMOS SI VINO DE LA SECCIÓN DE MAMÁ O DE CATEGORÍA NORMAL
-  const vieneDeMadre = location.state?.origen === 'madre';
+  // 🌸 EVALUAMOS SI VINO POR NAVEGACIÓN O SI FIREBASE INDICA QUE ES PRODUCTO MAMÁ
+  const esProductoMadre = location.state?.origen === 'madre' || Boolean(producto.madre);
 
-  const rutaVolver = vieneDeMadre 
+  const rutaVolver = esProductoMadre 
     ? '/dia-madre-cata' 
     : (producto.categoria ? `/productos/${producto.categoria.toLowerCase()}` : '/productos');
 
-  const textoVolver = vieneDeMadre 
+  const textoVolver = esProductoMadre 
     ? 'Volver a Especial Día de la Madre' 
     : `Volver a ${producto.categoria || 'productos'}`;
 
@@ -107,11 +107,11 @@ export default function ItemDetail() {
     ? imagenActiva.replace('/upload/', '/upload/w_1000,c_limit,f_auto,q_auto/')
     : imagenActiva;
 
-const handleCompartirWhatsApp = () => {
+  const handleCompartirWhatsApp = () => {
     let texto = "";
 
     // 🌸 SI EL PRODUCTO ES DEL DÍA DE LA MADRE O VIENE DE ESA SECCIÓN
-    if (vieneDeMadre || producto.madre) {
+    if (esProductoMadre) {
       const precio = esDestacado ? precioFinal : precioOriginal;
       texto = `¡Hola! Mirá este regalo especial para el Día de la Madre en La Casa de Cata: *${producto.nombre}* a *$${precio.toLocaleString('es-AR')}*. Miraló acá: ${window.location.href} y el resto en https://lacasadecata.com.ar/dia-madre-cata`;
     } 
