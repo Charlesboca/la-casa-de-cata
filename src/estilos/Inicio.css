@@ -551,3 +551,185 @@
 
 
 }
+
+/* ==========================================
+   🌸 SECCIÓN DÍA DE LA MADRE - BANNER HOME
+   ========================================== */
+.seccion-madre-home {
+  padding: 15px 12px;
+  background: linear-gradient(135deg, #2c1622 0%, #1a1a1a 100%);
+  border: 2px solid #ff4757;
+  text-align: center;
+  height: auto !important;
+  min-height: unset !important;
+}
+
+.titulo-banner-madre {
+  color: #ff6b81;
+  text-align: center;
+  font-size: 1.15rem;
+  margin-bottom: 12px;
+}
+
+.tarjeta-madre-destacado {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* En lugar de space-between para no estirar espacios */
+  gap: 15px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 15px;
+  margin: 0 auto 12px auto;
+  max-width: 650px;
+  border: 1px solid rgba(255, 71, 87, 0.4);
+  height: auto !important; /* Fuerza a ajustarse al contenido */
+}
+
+.imagen-madre-contenedor {
+  flex-shrink: 0;
+  width: 120px;
+  height: 120px;
+}
+
+.imagen-madre-producto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.info-madre-producto {
+  flex: 1 1 auto;
+  text-align: left;
+  color: #ffffff;
+}
+
+.badge-opcion-recomendada {
+  font-size: 0.72rem;
+  color: #ff6b81;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.nombre-madre-producto {
+  font-size: 1.05rem;
+  margin: 3px 0 4px 0;
+  color: #ffffff;
+}
+
+.precio-madre-producto {
+  font-weight: bold;
+  color: #ff4757;
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.acciones-madre-producto {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn-ver-regalo {
+  background-color: #ff4757;
+  color: #ffffff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-whatsapp-madre {
+  background-color: #25D366;
+  color: #ffffff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.contenedor-explorar-madre {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.btn-explorar-madre {
+  display: inline-block;
+  background-color: #ff4757;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.88rem;
+  padding: 10px 20px;
+  border-radius: 25px;
+  box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3);
+}
+
+/* ==========================================
+   📱 MEDIA QUERY PARA CELULAR (OPTIMIZADO)
+   ========================================== */
+@media (max-width: 768px) {
+  .tarjeta-madre-destacado {
+    flex-direction: column;
+    padding: 12px 10px;
+    gap: 10px !important; /* Elimina el agujero gigante */
+  }
+
+  .imagen-madre-contenedor {
+    width: 130px;
+    height: 130px;
+  }
+
+  .info-madre-producto {
+    text-align: center;
+    margin-bottom: 2px;
+  }
+
+  .nombre-madre-producto {
+    font-size: 1rem;
+  }
+
+  .precio-madre-producto {
+    font-size: 1.2rem;
+    margin-top: 2px;
+  }
+
+  /* Ponemos los 2 botones del producto en fila horizontal para ahorrar alto */
+  .acciones-madre-producto {
+    width: 100%;
+    display: flex;
+    flex-direction: row; /* Uno al lado del otro */
+    gap: 8px;
+  }
+
+  .btn-ver-regalo, 
+  .btn-whatsapp-madre {
+    flex: 1; /* Ocupan 50% cada uno */
+    padding: 9px 8px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  .contenedor-explorar-madre {
+    margin-top: 8px;
+  }
+
+  .btn-explorar-madre {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    font-size: 0.82rem;
+  }
+}
