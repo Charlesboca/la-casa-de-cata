@@ -5,7 +5,14 @@ export const categoriasFijas = [
     descripcion: 'Artículos para el hogar y cocina',
     imagen: '/imagenes/categorias/bazar.webp'
   },
+    {
+    id: '2',
+    nombre: 'bijouteri',
+    descripcion: 'Artículos de bijouteri y accesorios',
+    imagen: '/imagenes/categorias/bijouteri.webp'
+  },
   
+
    { id: '4',
     nombre: 'Electronica',
     descripcion: 'Artículos de electrónica',
