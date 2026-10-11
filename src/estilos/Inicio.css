@@ -1,7 +1,6 @@
 /* src/Inicio.css */
 .inicio-container {
   background-color: white;
-  /* min-height: 100vh; <- Borrá o comentá esta línea */
   font-family: sans-serif;
 }
 
@@ -9,12 +8,12 @@
   padding: 40px 20px;
   text-align: center;
   background-color: #fff1f2;
-  min-height: auto !important; /* 👉 Evita que cualquier regla heredada lo estire */
+  min-height: auto !important;
   height: auto !important;
 }
 
 .banner h1 {
-  font-size: 2.5rem; /* 👉 Un poquito más proporcional para que no sea tan gigante */
+  font-size: 2.5rem;
   font-weight: 800;
   color: #1e293b;
   margin-bottom: 15px;
@@ -35,21 +34,21 @@
   padding: 60px 20px;
   background-color: #f9f9f9;
   text-align: center;
-  min-height: 280px; /* Ajusta este valor según lo que ocupen tus tarjetas de servicios en celular */
+  min-height: 280px;
 }
 
 /* --- CINTILLO / TÍTULO DESTACADO LLAMATIVO --- */
 .titulo-banner-destacado {
-  background-color: #e11d48; /* Fondo rojo fuerte de oferta */
-  color: #ffffff;            /* Letras blancas */
+  background-color: #e11d48;
+  color: #ffffff;
   font-size: 1.5rem;
   font-weight: 800;
   text-align: center;
   padding: 15px 20px;
-  margin: 0 auto 35px auto;  /* Espacio con la tarjeta de abajo */
-  max-width: 800px;          /* Ancho máximo para que no sea una tira infinita en pantallas gigantes */
-  border-radius: 8px;        /* Bordes ligeramente redondeados */
-  box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3); /* Sombrita suave */
+  margin: 0 auto 35px auto;
+  max-width: 800px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3);
   letter-spacing: 0.5px;
 }
 
@@ -67,6 +66,9 @@
   border-radius: 15px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.05);
   transition: transform 0.3s;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
 }
 
 .tarjeta-servicio:hover {
@@ -86,7 +88,7 @@
 
 /* Estilo para que la tarjeta de tienda resalte */
 .tarjeta-especial {
-  background: #2c3e50 !important; /* Color oscuro del header/footer */
+  background: #2c3e50 !important;
   color: white !important;
   text-decoration: none;
 }
@@ -100,14 +102,7 @@
   display: block;
   margin-top: 15px;
   font-weight: bold;
-  color: #ff5733; /* Color de acento de tu marca */
-}
-
-/* Ajuste para el Link en caso de que lo necesites */
-.tarjeta-servicio {
-  text-decoration: none; /* Quitamos el subrayado del link */
-  display: flex;
-  flex-direction: column;
+  color: #ff5733;
 }
 
 /* --- SECCIÓN Y TARJETA DESTACADO DE LA SEMANA --- */
@@ -118,9 +113,10 @@
 }
 
 .tarjeta-destacado-home {
+  position: relative;
   max-width: 600px;
   margin: 0 auto;
-  background: #e0f2fe; /* Celeste suave */
+  background: #e0f2fe;
   border-radius: 16px;
   padding: 30px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
@@ -128,7 +124,7 @@
   flex-direction: column;
   align-items: center;
   transition: transform 0.3s ease;
-  border: 1px solid #bae6fd; /* Un borde celeste un poco más marcado para que destaque */
+  border: 1px solid #bae6fd;
 }
 
 .tarjeta-destacado-home:hover {
@@ -139,14 +135,14 @@
 .imagen-destacado-home {
   width: 100%;
   height: auto;
-  aspect-ratio: 4 / 3; /* Le dice al navegador exactamente qué proporción mantener */
+  aspect-ratio: 4 / 3;
   object-fit: cover;
   border-radius: 12px;
   margin-bottom: 20px;
 }
 
 .titulo-producto-destacado {
-  color: #1e3a8a; /* Un azul más oscuro para que resalte bien sobre el celeste */
+  color: #1e3a8a;
   font-size: 1.8rem;
   font-weight: 700;
   margin-bottom: 12px;
@@ -157,18 +153,7 @@
   font-size: 1.05rem;
   line-height: 1.6;
   margin-bottom: 20px;
-  text-align: left; /* O 'center' si preferís que quede centrado */
-}
-
-.precio-producto-destacado {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: #e11d48;
-  margin-bottom: 20px;
-  background: #ffffff;
-  padding: 8px 20px;
-  border-radius: 30px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  text-align: left;
 }
 
 .btn-ver-tienda-destacado {
@@ -187,15 +172,11 @@
 }
 
 /* --- ESTILOS PARA EL BADGE Y PRECIOS CON DESCUENTO --- */
-.tarjeta-destacado-home {
-  position: relative; /* Necesario para ubicar el badge flotando */
-}
-
 .badge-descuento-home {
   position: absolute;
   top: 15px;
   right: 15px;
-  background-color: #e11d48; /* Rojo llamativo de oferta */
+  background-color: #e11d48;
   color: white;
   font-weight: 800;
   font-size: 0.9rem;
@@ -234,23 +215,22 @@
 .titulo-especificaciones {
   font-size: 1.3rem;
   font-weight: 700;
-  color: #1e293b; /* Color oscuro profesional */
+  color: #1e293b;
   margin: 30px 0 15px 0;
   padding-bottom: 8px;
-  border-bottom: 2px solid #e2e8f0; /* Línea separadora elegante */
+  border-bottom: 2px solid #e2e8f0;
   display: flex;
   align-items: center;
   gap: 10px;
   text-align: left;
 }
 
-/* Opcional: Un pequeño detalle visual (un iconito o punto de color al costado) */
 .titulo-especificaciones::before {
   content: "";
   display: inline-block;
   width: 6px;
   height: 20px;
-  background-color: #e11d48; /* El color rojo/rosado de oferta o acento de tu web */
+  background-color: #e11d48;
   border-radius: 4px;
 }
 
@@ -261,7 +241,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background-color: #25d366; /* Verde oficial de WhatsApp */
+  background-color: #25d366;
   color: white;
   border: none;
   padding: 12px 15px;
@@ -279,15 +259,183 @@
   transform: translateY(-2px);
 }
 
-/* --- MEDIA QUERY GENERAL PARA CELULARES (Evita CLS y desbordes) --- */
+/* ==========================================
+   🌸 SECCIÓN DÍA DE LA MADRE - BANNER HOME
+   ========================================== */
+.seccion-madre-home {
+  padding: 20px 15px;
+  background: linear-gradient(135deg, #2c1622 0%, #1a1a1a 100%);
+  border: 2px solid #ff4757;
+  text-align: center;
+  height: auto;
+  min-height: unset;
+  align-self: center;
+}
+
+.titulo-banner-madre {
+  color: #ff6b81;
+  text-align: center;
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+}
+
+.tarjeta-madre-destacado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 15px 20px;
+  margin: 0 auto 15px auto;
+  max-width: 680px;
+  border: 1px solid rgba(255, 71, 87, 0.4);
+  flex-wrap: wrap;
+}
+
+.imagen-madre-contenedor {
+  flex-shrink: 0;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+}
+
+.imagen-madre-producto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.info-madre-producto {
+  flex: 1 1 200px;
+  text-align: left;
+  color: #ffffff;
+}
+
+.badge-opcion-recomendada {
+  font-size: 0.75rem;
+  color: #ff6b81;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.nombre-madre-producto {
+  font-size: 1.15rem;
+  margin: 4px 0 6px 0;
+  color: #ffffff;
+}
+
+.precio-madre-producto {
+  font-weight: bold;
+  color: #ff4757;
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.acciones-madre-producto {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.btn-ver-regalo {
+  background-color: #ff4757;
+  color: #ffffff;
+  padding: 9px 15px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-whatsapp-madre {
+  background-color: #25D366;
+  color: #ffffff;
+  border: none;
+  padding: 9px 13px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.contenedor-explorar-madre {
+  text-align: center;
+  margin-top: 18px;
+}
+
+.btn-explorar-madre {
+  display: inline-block;
+  background-color: #ff4757;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.95rem;
+  padding: 12px 24px;
+  border-radius: 25px;
+  box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3);
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-explorar-madre:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 71, 87, 0.4);
+}
+
+/* ==========================================
+   🔥 AJUSTES LIMPIOS DESTACADO DE LA SEMANA
+   ========================================== */
+.tarjeta-cargando {
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888888;
+}
+
+.contenedor-imagen-destacado {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.descripcion-producto-destacado p {
+  margin-bottom: 8px;
+}
+
+.acciones-destacado-home {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.btn-ver-tienda-destacado {
+  flex: 1;
+  text-align: center;
+}
+
+/* ==========================================
+   📱 MEDIA QUERIES GENERALES PARA CELULAR
+   ========================================== */
 @media (max-width: 768px) {
   .banner {
     padding: 30px 15px;
-    min-height: 220px; /* Reserva espacio para que el banner no salte */
+    min-height: 220px;
   }
 
   .banner h1 {
-    font-size: 2rem; /* Achicado de 3rem para celulares */
+    font-size: 1.8rem;
     margin-bottom: 12px;
   }
 
@@ -297,13 +445,13 @@
 
   .servicios-container {
     padding: 30px 15px;
-    min-height: 320px; /* Reserva el espacio exacto de la sección de servicios */
+    min-height: 320px;
   }
 
   .titulo-banner-destacado {
     font-size: 1.2rem;
     padding: 12px 15px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
   }
 
   .seccion-destacado-home {
@@ -311,11 +459,11 @@
   }
 
   .tarjeta-destacado-home {
-    padding: 20px;
+    padding: 20px 15px;
   }
 
   .titulo-producto-destacado {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
 
   .grid-servicios {
@@ -325,26 +473,55 @@
   .tarjeta-servicio {
     padding: 20px;
   }
-}
 
-/* --- BANNER COMPACTO ESPECIAL DÍA DE LA MADRE --- */
-.seccion-madre-home {
-  padding: 15px 15px !important;
-  background: linear-gradient(135deg, #2c1622 0%, #1a1a1a 100%);
-  border: 2px solid #ff4757;
-  text-align: center;
-  height: auto !important;
-  max-height: fit-content !important;
-  align-self: center !important; /* Si el padre es flex, evita que lo estire a lo alto */
-}
+  .acciones-destacado-home {
+    flex-direction: column;
+  }
 
-.seccion-madre-home .titulo-banner-destacado {
-  font-size: 1.1rem !important;
-  padding: 8px 12px !important;
-  margin: 0 auto 8px auto !important;
-}
+  /* 🌸 Adaptación en Celulares para el Banner del Día de la Madre */
+  .seccion-madre-home {
+    padding: 15px 10px;
+  }
 
-.seccion-madre-home p {
-  margin-bottom: 12px !important;
-  font-size: 0.9rem !important;
+  .titulo-banner-madre {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+  }
+
+  .tarjeta-madre-destacado {
+    flex-direction: column;
+    text-align: center;
+    padding: 15px 10px;
+    gap: 12px;
+  }
+
+  .info-madre-producto {
+    text-align: center;
+  }
+
+  .nombre-madre-producto {
+    font-size: 1.05rem;
+  }
+
+  .precio-madre-producto {
+    font-size: 1.2rem;
+  }
+
+  .acciones-madre-producto {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .btn-ver-regalo, 
+  .btn-whatsapp-madre {
+    width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
+  .btn-explorar-madre {
+    font-size: 0.85rem;
+    padding: 10px 18px;
+    width: 90%;
+  }
 }

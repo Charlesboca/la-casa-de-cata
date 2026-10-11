@@ -88,109 +88,137 @@ export default function FormularioProducto({ productoAEditar, onProductoGuardado
     }
   };
 
-  // Función para subir múltiples imágenes a Cloudinary
-  const subirImagenesACloudinary = async () => {
-    let urlsSubidas = [];
+
+  // Función para subir múltiples imágenes a Cloudinary con mejor manejo de errores
+const subirImagenesACloudinary = async () => {
+  let urlsSubidas = [];
+  
+  for (let file of imagenesFiles) {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "rowasound_upload");
     
-    for (let file of imagenesFiles) {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", "rowasound_upload");
+    try {
+      const res = await fetch("https://api.cloudinary.com/v1_1/djl3xx2lo/image/upload", { 
+        method: "POST", 
+        body: formData 
+      });
+      const data = await res.json();
+      if (data.secure_url) {
+        urlsSubidas.push(data.secure_url);
+      } else {
+        console.error("Error en la respuesta de Cloudinary:", data);
+      }
+    } catch (error) {
+      console.error("Error al subir imagen a Cloudinary:", error);
+    }
+  }
+  
+  return urlsSubidas;
+};
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  
+  if (!nombre || !precio || !categoria) {
+    setMensaje({ texto: 'Por favor, completá al menos el nombre, el precio y la categoría.', tipo: 'error' });
+    return;
+  }
+
+  setCargando(true);
+  setMensaje({ texto: '', tipo: '' });
+
+  try {
+    // 1. Subimos las nuevas fotos seleccionadas
+    let nuevasUrls = [];
+    if (imagenesFiles.length > 0) {
+      nuevasUrls = await subirImagenesACloudinary();
       
-      try {
-        const res = await fetch("https://api.cloudinary.com/v1_1/djl3xx2lo/image/upload", { 
-          method: "POST", 
-          body: formData 
+      // Si el usuario eligió archivos pero ninguno se pudo subir a Cloudinary, cancelamos el proceso
+      if (nuevasUrls.length === 0) {
+        setMensaje({ 
+          texto: 'Error al subir las imágenes a Cloudinary. Por favor verificá tu conexión o reintentá.', 
+          tipo: 'error' 
         });
-        const data = await res.json();
-        if (data.secure_url) {
-          urlsSubidas.push(data.secure_url);
-        }
-      } catch (error) {
-        console.error("Error al subir imagen a Cloudinary:", error);
+        setCargando(false);
+        return;
       }
     }
-    
-    return urlsSubidas;
-  };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    if (!nombre || !precio || !categoria) {
-      setMensaje({ texto: 'Por favor, completá al menos el nombre, el precio y la categoría.', tipo: 'error' });
+    // 2. Limpiamos las imágenes existentes removiendo placeholders previos
+    const imagenesExistentesLimpias = imagenesExistentes.filter(url => !url.includes('via.placeholder.com'));
+
+    // 3. Combinamos imágenes existentes y recién subidas
+    const galeriaFinal = [...imagenesExistentesLimpias, ...nuevasUrls];
+
+    // 4. Verificamos que quede al menos 1 imagen real
+    if (galeriaFinal.length === 0) {
+      setMensaje({ 
+        texto: 'Debes seleccionar al menos una imagen para el producto.', 
+        tipo: 'error' 
+      });
+      setCargando(false);
       return;
     }
 
-    setCargando(true);
-    setMensaje({ texto: '', tipo: '' });
-
-    try {
-      // Exclusividad para Destacados
-      if (destacado) {
-        const q = query(collection(db, "productos"), where("destacado", "==", true));
-        const querySnapshot = await getDocs(q);
-        const batch = writeBatch(db);
-        
-        querySnapshot.forEach((docSnap) => {
-          if (!esEdicion || docSnap.id !== productoAEditar.id) {
-            batch.update(docSnap.ref, { destacado: false });
-          }
-        });
-        await batch.commit();
-      }
-
-      // 1. Subimos las nuevas fotos
-      const nuevasUrls = await subirImagenesACloudinary();
-
-      // 2. Combinamos imágenes existentes y nuevas
-      const todasLasImagenes = [...imagenesExistentes, ...nuevasUrls];
-      const galeriaFinal = todasLasImagenes.length > 0 ? todasLasImagenes : ['https://via.placeholder.com/150'];
-
-      if (esEdicion) {
-        // --- MODIFICACIÓN ---
-        const productoRef = doc(db, "productos", productoAEditar.id);
-        await updateDoc(productoRef, {
-          nombre: nombre.trim(),
-          descripcion: descripcion.trim(),
-          precio: Number(precio),
-          categoria: categoria.toLowerCase().trim(),
-          destacado: destacado,
-          madre: madre, // 👉 Guardamos el booleano madre
-          imagenes: galeriaFinal,
-          imagen: galeriaFinal[0] 
-        });
-        setNombreGuardado(nombre.trim());
-        setModalAbierto(true);
-      } else {
-        // --- ALTA (CREACIÓN) ---
-        await addDoc(collection(db, "productos"), {
-          nombre: nombre.trim(),
-          descripcion: descripcion.trim(),
-          precio: Number(precio),
-          categoria: categoria.toLowerCase().trim(),
-          destacado: destacado,
-          madre: madre, // 👉 Guardamos el booleano madre
-          imagenes: galeriaFinal,
-          imagen: galeriaFinal[0],
-          createdAt: new Date()
-        });
-        setNombreGuardado(nombre.trim());
-        setModalAbierto(true);
-        limpiarFormulario();
-      }
-
-      if (onProductoGuardado) {
-        onProductoGuardado();
-      }
-
-    } catch (error) {
-      console.error("Error al guardar el producto: ", error);
-      setMensaje({ texto: 'Hubo un error al guardar el producto. Intentá de nuevo.', tipo: 'error' });
-    } finally {
-      setCargando(false);
+    // Exclusividad para Destacados
+    if (destacado) {
+      const q = query(collection(db, "productos"), where("destacado", "==", true));
+      const querySnapshot = await getDocs(q);
+      const batch = writeBatch(db);
+      
+      querySnapshot.forEach((docSnap) => {
+        if (!esEdicion || docSnap.id !== productoAEditar.id) {
+          batch.update(docSnap.ref, { destacado: false });
+        }
+      });
+      await batch.commit();
     }
-  };
+
+    if (esEdicion) {
+      // --- MODIFICACIÓN ---
+      const productoRef = doc(db, "productos", productoAEditar.id);
+      await updateDoc(productoRef, {
+        nombre: nombre.trim(),
+        descripcion: descripcion.trim(),
+        precio: Number(precio),
+        categoria: categoria.toLowerCase().trim(),
+        destacado: destacado,
+        madre: madre,
+        imagenes: galeriaFinal,
+        imagen: galeriaFinal[0] 
+      });
+      setNombreGuardado(nombre.trim());
+      setModalAbierto(true);
+    } else {
+      // --- ALTA (CREACIÓN) ---
+      await addDoc(collection(db, "productos"), {
+        nombre: nombre.trim(),
+        descripcion: descripcion.trim(),
+        precio: Number(precio),
+        categoria: categoria.toLowerCase().trim(),
+        destacado: destacado,
+        madre: madre,
+        imagenes: galeriaFinal,
+        imagen: galeriaFinal[0],
+        createdAt: new Date()
+      });
+      setNombreGuardado(nombre.trim());
+      setModalAbierto(true);
+      limpiarFormulario();
+    }
+
+    if (onProductoGuardado) {
+      onProductoGuardado();
+    }
+
+  } catch (error) {
+    console.error("Error al guardar el producto: ", error);
+    setMensaje({ texto: 'Hubo un error al guardar el producto. Intentá de nuevo.', tipo: 'error' });
+  } finally {
+    setCargando(false);
+  }
+};
 
   const handleDelete = async () => {
     if (!productoAEditar) return;

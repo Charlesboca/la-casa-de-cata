@@ -34,7 +34,7 @@ function App() {
               <Route path="/producto/:id" element={<ItemDetail />} />
               <Route path="/panel-producto" element={<FormularioProducto />} />
               <Route path="/Bover" element={<PanelAdministracion />} />
-              <Route path="/madre-bazar-cata" element={<MadreBazarCata />} />
+              <Route path="/dia-madre-cata" element={<MadreBazarCata />} />
               <Route path="*" element={<PageNotFound />} />
             </Routes>
           </Suspense>

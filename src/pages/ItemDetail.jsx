@@ -84,7 +84,7 @@ export default function ItemDetail() {
   const vieneDeMadre = location.state?.origen === 'madre';
 
   const rutaVolver = vieneDeMadre 
-    ? '/madre-bazar-cata' /* Asegurate de usar la ruta exacta que pusiste en tu Router para la vista de mamá */
+    ? '/dia-madre-cata' /* Asegurate de usar la ruta exacta que pusiste en tu Router para la vista de mamá */
     : (producto.categoria ? `/productos/${producto.categoria.toLowerCase()}` : '/productos');
 
   const textoVolver = vieneDeMadre 
