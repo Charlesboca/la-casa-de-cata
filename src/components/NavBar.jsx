@@ -9,7 +9,6 @@ export default function Navbar({ isOpen, closeMenu }) {
       <Link to="/productos" onClick={closeMenu}>Productos</Link>
 {/*       <Link to="/carrito" onClick={closeMenu}>Carrito</Link>
  */}    
-      <Link to="/dia-madre-cata" onClick={closeMenu}>Dia de la madre</Link>
  </nav>
   );
 }
