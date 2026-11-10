@@ -88,3 +88,73 @@
   color: #ffffff;
 }
 
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.tarjeta:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.contenedor-imagen-cat {
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+  background-color: #f8fafc;
+}
+
+.imagen-categoria {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.tarjeta:hover .imagen-categoria {
+  transform: scale(1.05);
+}
+
+.info-tarjeta-cat {
+  padding: 18px;
+  text-align: center;
+}
+
+.info-tarjeta-cat h3 {
+  font-size: 1.15rem;
+  color: #1e293b;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+}
+
+.ver-mas-cat {
+  font-size: 0.85rem;
+  color: #e11d48;
+  font-weight: 600;
+}
+
+/* 1. Definimos un alto fijo y prolijo para el contenedor de la imagen */
+.contenedor-imagen-cat, 
+.tarjeta .contenedor-imagen-cat,
+.tarjeta img.imagen-categoria {
+  width: 100%;
+}
+
+/* Forzamos el contenedor a tener una altura uniforme (ej: 180px) */
+.tarjeta .imagen-categoria,
+.imagen-categoria {
+  width: 100%;
+  height: 180px; /* Podés subirlo a 190px o bajarlo a 170px según prefieras */
+  object-fit: cover; /* Esto hace la magia: recorta prolijamente sin deformar la foto */
+  border-radius: 8px 8px 0 0; /* Opcional: redondea arriba si la tarjeta ya lo tiene */
+  display: block;
+}

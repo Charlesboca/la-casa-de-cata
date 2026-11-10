@@ -7,7 +7,7 @@ export const categoriasFijas = [
   },
     {
     id: '2',
-    nombre: 'bijouteri',
+    nombre: 'Bijouteri',
     descripcion: 'Artículos de bijouteri y accesorios',
     imagen: '/imagenes/categorias/bijouteri.webp'
   },
