@@ -715,3 +715,134 @@
     font-size: 0.82rem;
   }
 }
+
+/* ==========================================
+   ✨ ANIMACIONES SUTILES Y EFECTOS HOVER
+   ========================================== */
+
+/* 1. Pulso suave para el banner / títulos importantes */
+@keyframes pulsoLento {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.015); }
+  100% { transform: scale(1); }
+}
+
+.titulo-banner-destacado, 
+.titulo-banner-madre {
+  animation: pulsoLento 4s ease-in-out infinite;
+}
+
+/* 2. Efecto flotante / elevación suave en las tarjetas principales */
+.tarjeta-destacado-home,
+.tarjeta-madre-destacado,
+.tarjeta-servicio {
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+}
+
+.tarjeta-destacado-home:hover,
+.tarjeta-madre-destacado:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* 3. Brillo dinámico (Shimmer) en el badge de descuento de la semana */
+@keyframes brilloBadge {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.badge-descuento-home {
+  background: linear-gradient(90deg, #e11d48 0%, #ff4757 50%, #e11d48 100%);
+  background-size: 200% 100%;
+  animation: brilloBadge 3s infinite;
+}
+
+/* 4. Transición fluida para los botones de WhatsApp y Acciones */
+.btn-whatsapp-oferta, 
+.btn-whatsapp-madre, 
+.btn-ver-tienda-destacado,
+.btn-ver-regalo,
+.btn-explorar-madre {
+  transition: all 0.25s ease-in-out;
+}
+
+.btn-whatsapp-oferta:hover, 
+.btn-whatsapp-madre:hover, 
+.btn-ver-tienda-destacado:hover,
+.btn-ver-regalo:hover,
+.btn-explorar-madre:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+/* ==========================================
+   🛡️ SECCIÓN CONFIANZA / BENEFICIOS (HOME)
+   ========================================== */
+.seccion-confianza-home {
+  background-color: #fff1f2; /* Tono cálido en sintonía con el banner */
+  padding: 30px 20px;
+  border-top: 1px solid rgba(225, 29, 72, 0.1);
+  border-bottom: 1px solid rgba(225, 29, 72, 0.1);
+}
+
+.grid-confianza {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.item-confianza {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: white;
+  padding: 18px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border: 1px solid #ffe4e6;
+}
+
+.item-confianza:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(225, 29, 72, 0.1);
+}
+
+.icono-confianza {
+  font-size: 2.2rem;
+  flex-shrink: 0;
+}
+
+.item-confianza h4 {
+  color: #1e293b;
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+}
+
+.item-confianza p {
+  color: #64748b;
+  font-size: 0.88rem;
+  margin: 0;
+}
+
+/* 📱 Ajuste para celulares */
+@media (max-width: 768px) {
+  .seccion-confianza-home {
+    padding: 20px 15px;
+  }
+
+  .grid-confianza {
+    gap: 12px;
+  }
+
+  .item-confianza {
+    padding: 14px 16px;
+  }
+
+  .icono-confianza {
+    font-size: 1.8rem;
+  }
+}

@@ -253,6 +253,35 @@ export default function Inicio() {
         </div>
       </section>
 
+      {/* 🛡️ SECCIÓN CONFIANZA / BENEFICIOS */}
+      <section className="seccion-confianza-home">
+        <div className="grid-confianza">
+          <div className="item-confianza">
+            <span className="icono-confianza">📍</span>
+            <div>
+              <h4>Retiro en Local</h4>
+              <p>Villa Margarita, La Leonesa</p>
+            </div>
+          </div>
+
+          <div className="item-confianza">
+            <span className="icono-confianza">💳</span>
+            <div>
+              <h4>Medios de Pago</h4>
+              <p>Efectivo y Transferencia </p>
+            </div>
+          </div>
+
+          <div className="item-confianza">
+            <span className="icono-confianza">⭐</span>
+            <div>
+              <h4>Calidad y Confianza</h4>
+              <p>Atención de primera como siempre</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Sección de Horarios */}
       <section className="seccion-horarios">
         <h2 className="horarios-titulo">Horarios de Atención</h2>
@@ -265,7 +294,7 @@ export default function Inicio() {
           <div className="horario-card">
             <h3>Sábados</h3>
             <p className="hora">09:00 - 12:00</p>
-            <p className="hora">17:00 - 18:30</p>
+            <p className="hora">17:00 - 19:00</p>
           </div>
           <div className="horario-card">
             <h3>Domingos</h3>
